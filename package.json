@@ -1,0 +1,35 @@
+{
+  "name": "nodepop",
+  "version": "1.0.0",
+  "description": "Nodepop API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariant2/nodeapi.git"
+  },
+  "author": "Mari Anto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariant2/nodeapi/issues"
+  },
+  "homepage": "https://github.com/mariant2/nodeapi#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.2",
+    "mongoose-paginate-v2": "^1.7.1",
+    "mongoose-text-search": "^0.0.2",
+    "node-mailjet": "^6.0.2",
+    "nodemailer": "^6.9.1",
+    "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.31.0",
+    "eslint-plugin-react": "^7.31.11"
+  }
+}
