@@ -1,7 +1,7 @@
 const express = require('express');
 const jsonwebtoken = require("jsonwebtoken");
 const crypto = require('crypto')
-// const Mailjet = require('node-mailjet');
+const Mailjet = require('node-mailjet');
 
 const User = require('../models/user');
 
@@ -63,55 +63,46 @@ authRouter.post('/forgot-password', (req, res) =>{
 
         user.set({recoverPasswordToken: hash})
         user.save()
-            .then(user => forgotPasswordSuccess(user))
+            .then(user => forgotPasswordSuccess(req, res, user))
             .catch(err => res.status(500).json(err))
       });
 });
 
-const forgotPasswordSuccess = (user) => {
-    
+const forgotPasswordSuccess = (req, res, user) => {
     const recoverPassUrl = 'http://localhost:8080/new-password/' + user.recoverPasswordToken;
-    console.log(user.recoverPasswordToken)
-    
-    // TODO remove
-    res.sendStatus(200)
+    const mailjet = new Mailjet({
+        apiKey: 'cf1b66c0eb365dfc5edefb723c247a97',
+        apiSecret: '184a66a1cf03483c9305c0f3fb96d91c'
+    });
 
-    // TODO uncomment
-    // ------> START Email
-    // const mailjet = new Mailjet({
-    //     apiKey: 'your-api-key',
-    //     apiSecret: 'your-api-secret'
-    // });
-
-    // const request = mailjet.post('send', { version: 'v3.1' })
-    //     .request({
-    //     Messages: [
-    //         {
-    //         From: {
-    //             Email: "hello@flitter.com",
-    //             Name: "Flitter"
-    //         },
-    //         To: [
-    //             {
-    //             Email: user.email,
-    //             Name: user.username
-    //             }
-    //         ],
-    //         Subject: "Recover your pass.....",
-    //         TextPart: "asdasdasd",
-    //         HTMLPart: "asdasdasdasd" // Añadir recoverPassUrl.
-    //         }
-    //     ]
-    //     })
-
-    // request
-    //     .then((result) => {
-    //         res.sendStatus(200)
-    //     })
-    //     .catch((err) => {
-    //         res.sendStatus(500)
-    //     })
-    // ------> END Email
+    const request = mailjet.post('send', { version: 'v3.1' })
+        .request({
+        Messages: [
+            {
+            From: {
+                Email: "mari_antoniol@hotmail.com",
+                Name: "Flitter"
+            },
+            To: [
+                {
+                Email: user.email,
+                Name: user.username
+                }
+            ],
+            Subject: "Recover your password",
+            TextPart: "asdasdasd",
+            HTMLPart: "Hi " + user.username + ", <br/><br/>To recover your password click <a href=\"" + recoverPassUrl + "\">here</a> or copy-paste this link in your browser:<br/><br/>" + recoverPassUrl
+            }
+        ]
+        })
+        .then((result) => {
+            console.log(result)
+            res.sendStatus(200)
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500)
+        })
 };
 
 authRouter.post('/reset-password', (req, res) =>{

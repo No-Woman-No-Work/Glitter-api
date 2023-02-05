@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
     recoverPasswordToken: {
         type: String,
         required: false
-    }
+    },
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -44,7 +44,42 @@ tweetRouter.post('/', (req, res) =>{
         .catch(err => res.status(500).json(err))
 });
 
-// Create new tweet
+// Delete tweet
+tweetRouter.delete('/:tweetId', (req, res) =>{
+    
+    // TODO move to middleware
+    const token = req.headers.authorization.split(' ')[1];
+    if(!token) return res.status(401).json('Unauthorize user')
+
+    try{
+        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
+        req.jwtInfo = decoded
+
+        console.log(decoded);
+        // next() -> cuando esté en middleware
+
+    }catch(e){
+        console.log(e);
+        res.status(400).json('Token not valid')
+        return
+    }
+    // TODO hasta aquí
+
+    Tweet.deleteOne({ $and: [
+        {_id: req.params.tweetId},
+        {author: req.jwtInfo.user_id}
+    ]})
+        .then(result => {
+            if (!result.deletedCount) {
+                res.sendStatus(404)
+                return
+            }
+            res.sendStatus(200)
+        })
+        .catch(err => res.status(500).json(err))
+});
+
+// Listar tweet
 tweetRouter.get('/', (req, res) =>{
     
     // TODO move to middleware
@@ -68,6 +103,12 @@ tweetRouter.get('/', (req, res) =>{
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
     const order = req.query.order || 'desc';
+    const search = req.query.search;
+
+    const query = {
+        publishDate: { $lte: new Date() }
+    };
+    if (search) query.$text = {$search: search};
 
     var options = {
         page,
@@ -76,6 +117,9 @@ tweetRouter.get('/', (req, res) =>{
     options.sort = {'publishDate' : order};
 
     aggregate = Tweet.aggregate([
+        {
+            $match: query
+        },
         {
             $project: {
                 text: 1,
@@ -109,6 +153,62 @@ tweetRouter.get('/', (req, res) =>{
             );
         }
     });
+});
+
+tweetRouter.post('/:tweetId/kudos', (req, res) =>{
+    
+    // TODO move to middleware
+    const token = req.headers.authorization.split(' ')[1];
+    if(!token) return res.status(401).json('Unauthorize user')
+
+    try{
+        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
+        req.jwtInfo = decoded
+
+        console.log(decoded);
+        // next() -> cuando esté en middleware
+
+    }catch(e){
+        console.log(e);
+        res.status(400).json('Token not valid')
+        return
+    }
+    // TODO hasta aquí
+
+    Tweet.updateOne({_id: req.params.tweetId},
+        {
+            $addToSet: {kudos: req.jwtInfo.user_id}
+        })
+        .then(tweet => res.sendStatus(200))
+        .catch(err => res.status(500).json(err))
+});
+
+tweetRouter.delete('/:tweetId/kudos', (req, res) =>{
+    
+    // TODO move to middleware
+    const token = req.headers.authorization.split(' ')[1];
+    if(!token) return res.status(401).json('Unauthorize user')
+
+    try{
+        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
+        req.jwtInfo = decoded
+
+        console.log(decoded);
+        // next() -> cuando esté en middleware
+
+    }catch(e){
+        console.log(e);
+        res.status(400).json('Token not valid')
+        return
+    }
+    // TODO hasta aquí
+
+    Tweet.updateOne({_id: req.params.tweetId},
+        {
+            $pull: {kudos: req.jwtInfo.user_id}
+        })
+        .then(tweet => res.sendStatus(200))
+        .catch(err => res.status(500).json(err))
 });
 
 const publicFeed = (req, res) => {
