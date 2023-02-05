@@ -67,17 +67,7 @@ tweetRouter.get('/', (req, res) =>{
 
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
-//     const name = req.query.name;
-//     const minPrice = req.query.minPrice;
-//     const maxPrice = req.query.maxPrice;
-//     const tagList = req.query.tags;
     const order = req.query.order || 'desc';
-
-//     const query = {};
-//     if (name) query.name = {$text: {$search: name}};
-//     if (minPrice) query.price = {$gte: minPrice};
-//     if (maxPrice) query.price = {$lte: minPrice};
-//     if (tagList) query.tags = {$in : tagList.split(',')};
 
     var options = {
         page,
@@ -85,11 +75,38 @@ tweetRouter.get('/', (req, res) =>{
     };
     options.sort = {'publishDate' : order};
 
-    Tweet.paginate({}, options, (err, result) =>{
+    aggregate = Tweet.aggregate([
+        {
+            $project: {
+                text: 1,
+                publishDate: 1,
+                author: 1,
+                kudos: { $size: "$kudos" }
+            }
+        }
+    ]);
+    Tweet.aggregatePaginate(aggregate, options, (err, result) =>{
         if (err) {
+            console.log(err);
             res.status(500).json(err);
         } else {
-            res.json(result);
+
+            Tweet.populate(
+                result.docs,
+                {
+                    path: 'author',
+                    select: '_id username'
+                },
+                (err, populateResult) =>{
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json(err);
+                    } else {
+                        result.docs = populateResult
+                        res.json(result);
+                    }
+                }
+            );
         }
     });
 });

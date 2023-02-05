@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     recoverPasswordToken: {
         type: String,
         required: false
-    },
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

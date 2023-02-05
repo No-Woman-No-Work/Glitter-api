@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
+const aggregatePaginate = require('mongoose-aggregate-paginate-v2');
 
 const tweetSchema = new mongoose.Schema({
     text: {
@@ -16,8 +16,12 @@ const tweetSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    kudos: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 });
 
-tweetSchema.plugin(mongoosePaginate)
+tweetSchema.plugin(aggregatePaginate)
 
 module.exports = mongoose.model('Tweet', tweetSchema);
