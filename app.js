@@ -1,8 +1,10 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors')
+// const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/flitter', {useNewUrlParser: true})
+require('./lib/connectMongoose') // david, agregué la conexión a mongoose en un módulo aparte
+
+// mongoose.connect('mongodb://127.0.0.1:27017/flitter', {useNewUrlParser: true})
 
 const app = express();
 
