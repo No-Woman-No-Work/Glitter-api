@@ -1,6 +1,6 @@
 const express = require('express');
 const jsonwebtoken = require("jsonwebtoken");
-const { response } = require('../app');
+// const { response } = require('../app'); // comenté esta linea porque no encuentra el modulo
 
 const User = require('../models/user');
 

@@ -20,6 +20,9 @@ app.use('/users', require('./routes/user'));
 // app.use('/products', require('./routes/product'));
 // app.use('/tags', require('./routes/tag'));
 
+// const response = require('./lib/response'); // añadido ?? 
+// app.use(response);
+
 app.listen(3000, () => console.log('Flitter is listening in 3000'));
 
 module.exports = app;
