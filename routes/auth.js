@@ -14,19 +14,24 @@ authRouter.post('/register', (req, res) =>{
         {email: req.body.email}
     ]}, function (err, user) {
         if (!err && user) {
-            res.sendStatus(500).json({ message: 'El nombre de usuario o email ya existe.'}) 
+            res.sendStatus(400).json() 
             return
+        } 
+
+        if (req.body.username && req.body.email && req.body.password) {
+            const newUser = new User({
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password
+            })
+    
+            newUser.save()
+            .then(user => res.json(user))
+            .catch(err => res.status(500).json(err))
+        } else {
+            res.sendStatus(200)
         }
 
-        const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password
-        })
-
-        newUser.save()
-        .then(user => res.json(user))
-        .catch(err => res.status(500).json(err))
       });
 });
 
