@@ -14,7 +14,7 @@ authRouter.post('/register', (req, res) =>{
         {email: req.body.email}
     ]}, function (err, user) {
         if (!err && user) {
-            res.sendStatus(500) 
+            res.sendStatus(500).json({ message: 'El nombre de usuario o email ya existe.'}) 
             return
         }
 

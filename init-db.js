@@ -141,7 +141,7 @@ async function initTweets() {
     }
   ]);
   console.log(`Created ${inserted.length} tweets.`);
-  console.log(`Created ${User.length} users.`)
+  console.log(`Created ${users.length} users.`)
 }
 
 // función pregunta si/no a borrar la base de datos anterior
