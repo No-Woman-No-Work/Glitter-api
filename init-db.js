@@ -75,7 +75,7 @@ async function initUsers() {
             password: 'tororo'
       });
 
-      // save new users in database
+      // save new users in database (REFACTORIZAR?)
       user1.save();
       user2.save();
       user3.save();
@@ -100,7 +100,8 @@ async function initTweets() {
       author: users[0]._id,
       kudos: [
         users[2]._id,
-        users[3]._id
+        users[3]._id,
+        users[4]._id
       ]
     },
     {
@@ -126,8 +127,7 @@ async function initTweets() {
       publishDate: new Date(),
       author: users[3]._id,
       kudos: [
-        users[2]._id,
-        users[3]._id
+        users[2]._id
       ]
     },
     {
