@@ -24,8 +24,8 @@ async function main() {
 
   const connection = require('./lib/connectMongoose')
   
-  // inicializar la colección de Tweets
-
+  // inicializar la colección de usuarios y luego la de tweets
+  await initUsers()
   await initTweets();
 
   // desconectamos de la base de datos
@@ -35,6 +35,56 @@ async function main() {
 
 main().catch(err => console.log('Error', err));
 
+let users = []
+
+async function initUsers() {
+
+      // delete all users in database
+      const resultUsers = await User.deleteMany({});
+      console.log(`Deleted ${resultUsers.deletedCount} users.`)
+
+      // create 5 new users
+      const user1 = new User ({
+            _id: new mongoose.Types.ObjectId(),
+            username: 'ananas',
+            email: 'ananas@gmail.com',
+            password: 'tururu'
+      });
+      const user2 = new User ({
+            _id: new mongoose.Types.ObjectId(),
+            username: 'banana',
+            email: 'banana@gmail.com',
+            password: 'tarara'
+      });
+      const user3 = new User ({
+            _id: new mongoose.Types.ObjectId(),
+            username: 'cherry',
+            email: 'cherry@gmail.com',
+            password: 'tiriri'
+      });
+      const user4 = new User ({
+            _id: new mongoose.Types.ObjectId(),
+            username: 'date',
+            email: 'date@gmail.com',
+            password: 'terere'
+      });
+      const user5 = new User ({
+            _id: new mongoose.Types.ObjectId(),
+            username: 'elderberry',
+            email: 'elderberry@gmail.com',
+            password: 'tororo'
+      });
+
+      // save new users in database
+      user1.save();
+      user2.save();
+      user3.save();
+      user4.save();
+      user5.save();
+
+      users = [user1, user2, user3, user4, user5];
+}
+
 
 async function initTweets() {
 
@@ -42,96 +92,51 @@ async function initTweets() {
   const resultTweets = await Tweet.deleteMany();
   console.log(`Deleted ${resultTweets.deletedCount} tweets.`);
 
-  const resultUsers = await User.deleteMany();
-  console.log(`Deleted ${resultUsers.deletedCount} users.`);
-
-  // crear autores
-  const user1 = new User ({
-    _id: new mongoose.Types.ObjectId(),
-    username: 'ananas',
-    email: 'ananas@gmail.com',
-    password: 'tururu'
-  });
-  user1.save();
-
-  const user2 = new User ({
-    _id: new mongoose.Types.ObjectId(),
-    username: 'banana',
-    email: 'banana@gmail.com',
-    password: 'tarara'
-  });
-  user2.save();
-  
-  const user3 = new User ({
-    _id: new mongoose.Types.ObjectId(),
-    username: 'cherry',
-    email: 'cherry@gmail.com',
-    password: 'tiriri'
-  });
-  user3.save();
-    
-    const user4 = new User ({
-    _id: new mongoose.Types.ObjectId(),
-    username: 'date',
-    email: 'date@gmail.com',
-    password: 'terere'
-  });
-  user4.save();
-    
-    const user5 = new User ({
-    _id: new mongoose.Types.ObjectId(),
-    username: 'elderberry',
-    email: 'elderberry@gmail.com',
-    password: 'tororo'
-    });
-  user5.save();
-
-
   // crear Tweets iniciales
   const inserted = await Tweet.insertMany([
     {
       text: "I love coding!",
       publishDate: new Date(),
-      author: user1._id,
+      author: users[0]._id,
       kudos: [
-        user2._id,
-        user3._id
+        users[2]._id,
+        users[3]._id
       ]
     },
     {
       text: "Learning Node.js is so much fun!",
       publishDate: new Date(),
-      author: user2._id,
+      author: users[1]._id,
       kudos: [
-        user1._id,
-        user4._id
+        users[1]._id,
+        users[3]._id
       ]
     },
     {
       text: "Express is the best backend framework!",
       publishDate: new Date(),
-      author: user3._id,
+      author: users[2]._id,
       kudos: [
-        user1._id,
-        user2._id
+        users[1]._id,
+        users[2]._id
       ]
     },
     {
       text: "MongoDB is my favorite database!",
       publishDate: new Date(),
-      author: user4._id,
+      author: users[3]._id,
       kudos: [
-        user2._id,
-        user3._id
+        users[2]._id,
+        users[3]._id
       ]
     },
     {
       text: "JWT is a great way to handle authentication!",
       publishDate: new Date(),
-      author: user5._id,
+      author: users[4]._id,
       kudos: [
-        user1._id,
-        user3._id
+        users[1]._id,
+        users[3]._id
       ]
     }
   ]);
@@ -157,3 +162,5 @@ function question(text) {
     })
   })
 }
+
+
