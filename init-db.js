@@ -39,8 +39,11 @@ main().catch(err => console.log('Error', err));
 async function initTweets() {
 
   // borrar todos los documentos de la colección de Tweets
-  const result = await Tweet.deleteMany();
-  console.log(`Eliminados ${result.deletedCount} Tweets.`);
+  const resultTweets = await Tweet.deleteMany();
+  console.log(`Deleted ${resultTweets.deletedCount} tweets.`);
+
+  const resultUsers = await User.deleteMany();
+  console.log(`Deleted ${resultUsers.deletedCount} users.`);
 
   // crear autores
   const user1 = new User ({
@@ -49,11 +52,7 @@ async function initTweets() {
     email: 'ananas@gmail.com',
     password: 'tururu'
   });
-  user1.save(function(err){
-    if (err) {
-      return handleError(err);
-    }
-  });
+  user1.save();
 
   const user2 = new User ({
     _id: new mongoose.Types.ObjectId(),
@@ -61,11 +60,7 @@ async function initTweets() {
     email: 'banana@gmail.com',
     password: 'tarara'
   });
-  user2.save(function(err){
-    if (err) {
-      return handleError(err);
-    }
-  });
+  user2.save();
   
   const user3 = new User ({
     _id: new mongoose.Types.ObjectId(),
@@ -73,11 +68,7 @@ async function initTweets() {
     email: 'cherry@gmail.com',
     password: 'tiriri'
   });
-  user3.save(function(err){
-    if (err) {
-      return handleError(err);
-    }
-  });
+  user3.save();
     
     const user4 = new User ({
     _id: new mongoose.Types.ObjectId(),
@@ -85,11 +76,7 @@ async function initTweets() {
     email: 'date@gmail.com',
     password: 'terere'
   });
-  user4.save(function(err){
-    if (err) {
-      return handleError(err);
-    }
-  });
+  user4.save();
     
     const user5 = new User ({
     _id: new mongoose.Types.ObjectId(),
@@ -97,11 +84,7 @@ async function initTweets() {
     email: 'elderberry@gmail.com',
     password: 'tororo'
     });
-  user5.save(function(err){
-    if (err) {
-      return handleError(err);
-    }
-  });
+  user5.save();
 
 
   // crear Tweets iniciales
@@ -152,7 +135,8 @@ async function initTweets() {
       ]
     }
   ]);
-  console.log(`Created ${inserted.length} tweets.`)
+  console.log(`Created ${inserted.length} tweets.`);
+  console.log(`Created ${User.length} users.`)
 }
 
 // función pregunta si/no a borrar la base de datos anterior
