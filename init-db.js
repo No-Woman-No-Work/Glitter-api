@@ -1,14 +1,17 @@
 // Inicializar la base datos con los datos mínimos para funcionar
 
-
 const readline = require('readline');
+const cors = require('cors')
 
+// usamos cors
+app.use(cors())
 
 // cargamos los modelos
 
 const Tweet = require('./models/tweet');
 const User = require('./models/user');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const app = require('./app');
 
 
 
