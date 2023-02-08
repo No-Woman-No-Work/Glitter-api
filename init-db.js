@@ -57,14 +57,61 @@ async function initTweets() {
   console.log(`Eliminados ${result.deletedCount} Tweets.`);
 
   // crear autores
-  const user = new User ({
+  const user1 = new User ({
     _id: new mongoose.Types.ObjectId(),
     username: 'ananas',
     email: 'ananas@gmail.com',
-    password: 'tuculo'
+    password: 'tururu'
+  });
+  user1.save(function(err){
+    if (err) {
+      return handleError (err);
+    }
+  });
+
+  const user2 = new User ({
+    _id: new mongoose.Types.ObjectId(),
+    username: 'banana',
+    email: 'banana@gmail.com',
+    password: 'tarara'
+  });
+  user2.save(function(err){
+    if (err) {
+      return handleError (err);
+    }
   });
   
-  user.save(function(err){
+  const user3 = new User ({
+    _id: new mongoose.Types.ObjectId(),
+    username: 'cherry',
+    email: 'cherry@gmail.com',
+    password: 'tiriri'
+  });
+  user3.save(function(err){
+    if (err) {
+      return handleError (err);
+    }
+  });
+    
+    const user4 = new User ({
+    _id: new mongoose.Types.ObjectId(),
+    username: 'date',
+    email: 'date@gmail.com',
+    password: 'terere'
+  });
+  user4.save(function(err){
+    if (err) {
+      return handleError (err);
+    }
+  });
+    
+    const user5 = new User ({
+    _id: new mongoose.Types.ObjectId(),
+    username: 'elderberry',
+    email: 'elderberry@gmail.com',
+    password: 'tororo'
+    });
+  user5.save(function(err){
     if (err) {
       return handleError (err);
     }
@@ -76,30 +123,48 @@ async function initTweets() {
     {
       text: "I love coding!",
       publishDate: new Date(),
-      author: user._id,
-      // kudos: [
-      //   "6a1b6c6d6e6f6g6h6i6j6k",
-      //   "7x1y7z7a7b7c7d7e7f7g7h"
-      // ]
+      author: user1._id,
+      kudos: [
+        user2._id,
+        user3._id
+      ]
+    },
+    {
+      text: "Learning Node.js is so much fun!",
+      publishDate: new Date(),
+      author: user2._id,
+      kudos: [
+        user1._id,
+        user4._id
+      ]
+    },
+    {
+      text: "Express is the best backend framework!",
+      publishDate: new Date(),
+      author: user3._id,
+      kudos: [
+        user1._id,
+        user2._id
+      ]
+    },
+    {
+      text: "MongoDB is my favorite database!",
+      publishDate: new Date(),
+      author: user4._id,
+      kudos: [
+        user2._id,
+        user3._id
+      ]
+    },
+    {
+      text: "JWT is a great way to handle authentication!",
+      publishDate: new Date(),
+      author: user5._id,
+      kudos: [
+        user1._id,
+        user3._id
+      ]
     }
-    // {
-    //   text: "Vue.js is my favorite frontend framework!",
-    //   publishDate: new Date(),
-    //   author: "6a1b6c6d6e6f6g6h6i6j6k",
-    //   kudos: [
-    //     "5f1c5d5e5f5g5h5i5j5k5l",
-    //     "7x1y7z7a7b7c7d7e7f7g7h"
-    //   ]
-    // },
-    // {
-    //   text: "Node.js is amazing for backend development!",
-    //   publishDate: new Date(),
-    //   author: "7x1y7z7a7b7c7d7e7f7g7h",
-    //   kudos: [
-    //     "5f1c5d5e5f5g5h5i5j5k5l",
-    //     "6a1b6c6d6e6f6g6h6i6j6k"
-    //   ]
-    // }
   ]);
   console.log(`Created ${inserted.length} tweets.`)
 }
