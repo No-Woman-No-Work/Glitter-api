@@ -20,32 +20,18 @@ async function main() {
     process.exit();
   }
 
-
   // conectar a la base de datos
-  mongoose.set('strictQuery', false);
 
-
-  mongoose.connection.on('error', err => {
-    console.log('Error de conexión a MongoDB', err);
-    process.exit(1);
-  });
-
-
-  mongoose.connection.once('open', () => {
-    console.log('Conectado a MongoDB en', mongoose.connection.name);
-  });
-
-
-  mongoose.connect('mongodb://127.0.0.1:27017/flitter', {useNewUrlParser: true}) // revisar que no sea 'mongodb://127.0.0.1:27017/flitter'
-
-
+  const connection = require('./lib/connectMongoose')
+  
   // inicializar la colección de Tweets
+
   await initTweets();
 
   // desconectamos de la base de datos
-  mongoose.connection.close();
-}
 
+  connection.close();
+}
 
 main().catch(err => console.log('Error', err));
 
@@ -65,7 +51,7 @@ async function initTweets() {
   });
   user1.save(function(err){
     if (err) {
-      return handleError (err);
+      return handleError(err);
     }
   });
 
@@ -77,7 +63,7 @@ async function initTweets() {
   });
   user2.save(function(err){
     if (err) {
-      return handleError (err);
+      return handleError(err);
     }
   });
   
@@ -89,7 +75,7 @@ async function initTweets() {
   });
   user3.save(function(err){
     if (err) {
-      return handleError (err);
+      return handleError(err);
     }
   });
     
@@ -101,7 +87,7 @@ async function initTweets() {
   });
   user4.save(function(err){
     if (err) {
-      return handleError (err);
+      return handleError(err);
     }
   });
     
@@ -113,7 +99,7 @@ async function initTweets() {
     });
   user5.save(function(err){
     if (err) {
-      return handleError (err);
+      return handleError(err);
     }
   });
 
@@ -169,6 +155,7 @@ async function initTweets() {
   console.log(`Created ${inserted.length} tweets.`)
 }
 
+// función pregunta si/no a borrar la base de datos anterior
 
 function question(text) {
   return new Promise((resolve, reject) => {
