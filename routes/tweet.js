@@ -1,5 +1,6 @@
 const express = require('express');
 const jsonwebtoken = require("jsonwebtoken");
+const authMiddleware = require('./authMiddleware');
 
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
@@ -7,26 +8,8 @@ const Tweet = require('../models/tweet');
 const tweetRouter = express.Router();
 
 // Create new tweet
-tweetRouter.post('/', (req, res) =>{
-    
-    // TODO move to middleware
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token) return res.status(401).json('Unauthorize user')
-
-    try{
-        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
-        req.jwtInfo = decoded
-
-        console.log(decoded);
-        // next() -> cuando esté en middleware
-
-    }catch(e){
-        console.log(e);
-        res.status(400).json('Token not valid')
-        return
-    }
-    // TODO hasta aquí
-
+tweetRouter.post('/', authMiddleware, (req, res) =>{
+   
     if (!req.body.text) {
         res.sendStatus(400)
         return
@@ -45,26 +28,8 @@ tweetRouter.post('/', (req, res) =>{
 });
 
 // Delete tweet
-tweetRouter.delete('/:tweetId', (req, res) =>{
+tweetRouter.delete('/:tweetId', authMiddleware, (req, res) =>{
     
-    // TODO move to middleware
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token) return res.status(401).json('Unauthorize user')
-
-    try{
-        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
-        req.jwtInfo = decoded
-
-        console.log(decoded);
-        // next() -> cuando esté en middleware
-
-    }catch(e){
-        console.log(e);
-        res.status(400).json('Token not valid')
-        return
-    }
-    // TODO hasta aquí
-
     Tweet.deleteOne({ $and: [
         {_id: req.params.tweetId},
         {author: req.jwtInfo.user_id}
@@ -82,9 +47,9 @@ tweetRouter.delete('/:tweetId', (req, res) =>{
 // Listar tweet
 tweetRouter.get('/', (req, res) =>{
     
-    // TODO move to middleware
+    // TODO move to middleware //  no lo he implementado por el uso de publicFeed
     const token = req.headers.authorization.split(' ')[1];
-    if(!token) return publicFeed(req, res);
+    if(!token) return publicFeed(req, res); 
 
     try{
         const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
@@ -155,26 +120,8 @@ tweetRouter.get('/', (req, res) =>{
     });
 });
 
-tweetRouter.post('/:tweetId/kudos', (req, res) =>{
+tweetRouter.post('/:tweetId/kudos', authMiddleware, (req, res) =>{
     
-    // TODO move to middleware
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token) return res.status(401).json('Unauthorize user')
-
-    try{
-        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
-        req.jwtInfo = decoded
-
-        console.log(decoded);
-        // next() -> cuando esté en middleware
-
-    }catch(e){
-        console.log(e);
-        res.status(400).json('Token not valid')
-        return
-    }
-    // TODO hasta aquí
-
     Tweet.updateOne({_id: req.params.tweetId},
         {
             $addToSet: {kudos: req.jwtInfo.user_id}
@@ -183,26 +130,8 @@ tweetRouter.post('/:tweetId/kudos', (req, res) =>{
         .catch(err => res.status(500).json(err))
 });
 
-tweetRouter.delete('/:tweetId/kudos', (req, res) =>{
+tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
     
-    // TODO move to middleware
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token) return res.status(401).json('Unauthorize user')
-
-    try{
-        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
-        req.jwtInfo = decoded
-
-        console.log(decoded);
-        // next() -> cuando esté en middleware
-
-    }catch(e){
-        console.log(e);
-        res.status(400).json('Token not valid')
-        return
-    }
-    // TODO hasta aquí
-
     Tweet.updateOne({_id: req.params.tweetId},
         {
             $pull: {kudos: req.jwtInfo.user_id}

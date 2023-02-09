@@ -1,5 +1,5 @@
 ## Introduction
-Practice Backend with Node, create a second-hand item sales service calling Nodepop. The service maintains advertisements for the purchase or sale of articles and allows consultation and filtering by various criteria.
+pasar a ingles -->  Parte del proyecto final del Bootcamp Mujeres in Tech (Glovo - Keepcoding). En este caso desarrollamos una app con Node.js, que utiliza MongoDb como base de datos, Mongoose para su conexión y Express. Tiene una API REST con la que gestionamos los datos de nuestro Flitter, una socialmedia creada con VUE 3.
 
 
 ### Install mongoDB
