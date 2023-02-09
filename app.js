@@ -17,12 +17,12 @@ app.locals.JWT_SECRET = 'flitter'
 app.use(express.json())
 
 app.use(cors())
-app.use(authMiddleware);
 
 app.use('/auth', require('./routes/auth'));
 app.use('/tweets', require('./routes/tweet'));
 app.use('/users', require('./routes/user'));
 // app.use('/products', require('./routes/product'));
+app.use(authMiddleware);
 // app.use('/tags', require('./routes/tag'));
 
 // const response = require('./lib/response'); // añadido ?? 
