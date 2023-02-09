@@ -1,5 +1,5 @@
 const express = require('express');
-const authMiddleware = require('./authMiddleware');
+const authMiddleware = require('../authMiddleware');
 // const { response } = require('../app'); // comenté esta linea porque no encuentra el modulo
 
 const User = require('../models/user');

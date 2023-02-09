@@ -1,6 +1,6 @@
 const express = require('express');
 const jsonwebtoken = require("jsonwebtoken");
-const authMiddleware = require('./authMiddleware');
+const authMiddleware = require('../authMiddleware');
 
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
