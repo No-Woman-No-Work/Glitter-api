@@ -14,9 +14,12 @@ authRouter.post('/register', (req, res) =>{
         {email: req.body.email}
     ]}, function (err, user) {
         if (!err && user) {
-            res.sendStatus(400).json() 
-            return
-        } 
+            res.sendStatus(400).json({
+                error: 'Email/username already exists'
+            }); 
+            return 
+        }
+            
 
         if (req.body.username && req.body.email && req.body.password) {
             const newUser = new User({
@@ -136,5 +139,36 @@ authRouter.post('/reset-password', (req, res) =>{
             .catch(err => res.status(500).json(err))
       });
 });
+
+// verifiación de si el token es correcto ( para authGuard)
+authRouter.post('/verify-token', (req, res) => {
+    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
+
+    if (!token) {
+      return res.status(401).json({
+        error: 'Unauthorized user'
+      });
+    }
+  
+    try {
+      const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
+      req.jwtInfo = decoded;
+      
+      res.status(200).json({
+        message: 'Token is valid',
+        user: decoded
+      });
+    
+    } catch (e) {
+      return res.status(400).json({
+        error: 'Token not valid'
+      });
+    }
+  });
+  
+
+
+
+
 
 module.exports = authRouter

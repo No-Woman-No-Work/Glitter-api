@@ -3,7 +3,9 @@ const jsonwebtoken = require('jsonwebtoken');
 function authMiddleware(req, res, next) {
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
-    return res.status(401).json('Unauthorize user');
+    return res.status(401).json({
+      error: 'Unauthorized user'
+    });
   }
 
   try {
@@ -12,11 +14,13 @@ function authMiddleware(req, res, next) {
 
     console.log(decoded);
     next();
-    
+
   } catch (e) {
     console.log(e);
-    res.status(400).json('Token not valid');
-    return;
+    res.status(400).json({
+      error: 'Token not valid'
+    });
+    return 
   }
 }
 
