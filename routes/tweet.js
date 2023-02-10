@@ -48,14 +48,14 @@ tweetRouter.delete('/:tweetId', authMiddleware, (req, res) =>{
 tweetRouter.get('/', (req, res) =>{
     
     // TODO move to middleware //  no lo he implementado por el uso de publicFeed
-    const token = req.headers.authorization.split(' ')[1];
-    if(!token) {
-        return res.status(401).json({
-          error: 'Unauthorized user'
-        });
-      }
-    // return publicFeed(req, res); 
-
+    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
+    if(!token)
+    return publicFeed(req, res); 
+    //  {
+    //     return res.status(401).json({
+    //       error: 'Unauthorized user'
+    //     });
+    //   }
 
     try{
         const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
@@ -146,45 +146,45 @@ tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
         .catch(err => res.status(500).json(err))
 });
 
-// const publicFeed = (req, res) => {
-//     const page = req.query.page || 1;
-//     const limit = req.query.limit || 10;
-//     const order = req.query.order || 'desc';
+const publicFeed = (req, res) => {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+    const order = req.query.order || 'desc';
 
-//     const query = {
-//         publishDate: { $lte: new Date() }
-//     };
+    const query = {
+        publishDate: { $lte: new Date() }
+    };
 
-//     var options = {
-//         page,
-//         limit,
-//         sort: { publishDate: order }
-//     };
+    var options = {
+        page,
+        limit,
+        sort: { publishDate: order }
+    };
 
-//     Tweet.paginate(query, options, (err, result) => {
-//         if (err) {
-//             console.log(err);
-//             res.status(500).json(err);
-//         } else {
-//             Tweet.populate(
-//                 result.docs,
-//                 {
-//                     path: 'author',
-//                     select: '_id username'
-//                 },
-//                 (err, populateResult) => {
-//                     if (err) {
-//                         console.log(err);
-//                         res.status(500).json(err);
-//                     } else {
-//                         result.docs = populateResult;
-//                         res.json(result);
-//                     }
-//                 }
-//             );
-//         }
-//     });
+    Tweet.paginate(query, options, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            Tweet.populate(
+                result.docs,
+                {
+                    path: 'author',
+                    select: '_id username'
+                },
+                (err, populateResult) => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).json(err);
+                    } else {
+                        result.docs = populateResult;
+                        res.json(result);
+                    }
+                }
+            );
+        }
+    });
             
-// }
+}
 
 module.exports = tweetRouter

@@ -45,37 +45,32 @@ async function initUsers() {
 
       // create 5 new users
       const user1 = new User ({
-            _id: new mongoose.Types.ObjectId(),
             username: 'ananas',
             email: 'ananas@gmail.com',
             password: 'tururu'
       });
       const user2 = new User ({
-            _id: new mongoose.Types.ObjectId(),
             username: 'banana',
             email: 'banana@gmail.com',
             password: 'tarara'
       });
       const user3 = new User ({
-            _id: new mongoose.Types.ObjectId(),
             username: 'cherry',
             email: 'cherry@gmail.com',
             password: 'tiriri'
       });
       const user4 = new User ({
-            _id: new mongoose.Types.ObjectId(),
             username: 'date',
             email: 'date@gmail.com',
             password: 'terere'
       });
       const user5 = new User ({
-            _id: new mongoose.Types.ObjectId(),
             username: 'elderberry',
             email: 'elderberry@gmail.com',
             password: 'tororo'
       });
 
-      // save new users in database (REFACTORIZAR?)
+      // save new users in database 
       user1.save();
       user2.save();
       user3.save();
@@ -96,7 +91,7 @@ async function initTweets() {
   const inserted = await Tweet.insertMany([
     {
       text: "I love coding!",
-      publishDate: new Date(),
+      publishDate: Date.now(),
       author: users[0]._id,
       kudos: [
         users[2]._id,
@@ -106,7 +101,7 @@ async function initTweets() {
     },
     {
       text: "Learning Node.js is so much fun!",
-      publishDate: new Date(),
+      publishDate: Date.now(),
       author: users[1]._id,
       kudos: [
         users[1]._id,
@@ -115,7 +110,7 @@ async function initTweets() {
     },
     {
       text: "Express is the best backend framework!",
-      publishDate: new Date(),
+      publishDate: Date.now(),
       author: users[2]._id,
       kudos: [
         users[1]._id,
@@ -124,7 +119,7 @@ async function initTweets() {
     },
     {
       text: "MongoDB is my favorite database!",
-      publishDate: new Date(),
+      publishDate: Date.now(),
       author: users[3]._id,
       kudos: [
         users[2]._id
@@ -132,7 +127,7 @@ async function initTweets() {
     },
     {
       text: "JWT is a great way to handle authentication!",
-      publishDate: new Date(),
+      publishDate: Date.now(),
       author: users[4]._id,
       kudos: [
         users[1]._id,
