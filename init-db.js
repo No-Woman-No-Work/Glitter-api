@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 // Inicializar la base datos con los datos mínimos para funcionar
 
 
@@ -39,47 +41,51 @@ let users = []
 
 async function initUsers() {
 
-      // delete all users in database
-      const resultUsers = await User.deleteMany({});
-      console.log(`Deleted ${resultUsers.deletedCount} users.`)
-
-      // create 5 new users
-      const user1 = new User ({
-            username: 'sil',
-            email: 'pescadorlopezsilvia@gmail.com',
-            password: '123456'
-      });
-      const user2 = new User ({
-            username: 'mari',
-            email: 'xixiadecosta@gmail.com',
-            password: 'tarara'
-      });
-      const user3 = new User ({
-            username: 'mollete',
-            email: 'pescadorlopezs@gmail.com',
-            password: 'tiriri'
-      });
-      const user4 = new User ({
-            username: 'muki',
-            email: 'silvikini@hotmail.com',
-            password: 'terere'
-      });
-      const user5 = new User ({
-            username: 'neli',
-            email: 'maantoana@gmail.com',
-            password: 'tororo'
-      });
-
-      // save new users in database 
-      user1.save();
-      user2.save();
-      user3.save();
-      user4.save();
-      user5.save();
-
-      users = [user1, user2, user3, user4, user5];
-}
-
+  // delete all users in database
+  const resultUsers = await User.deleteMany({});
+  console.log(`Deleted ${resultUsers.deletedCount} users.`)
+  
+  // create 5 new users
+  const user1 = new User ({
+    username: 'sil',
+    email: 'pescadorlopezsilvia@gmail.com',
+    password: '123456',
+    jwtInfo: jwt.sign({ id: user1._id, email: user1.email }, 'flitter', { expiresIn: '1h' })
+  });
+  const user2 = new User ({
+    username: 'mari',
+    email: 'xixiadecosta@gmail.com',
+    password: '123456',
+    jwtInfo: jwt.sign({ id: user2._id, email: user2.email }, 'flitter', { expiresIn: '1h' })
+  });
+  const user3 = new User ({
+    username: 'mollete',
+    email: 'pescadorlopezs@gmail.com',
+    password: '123456',
+    jwtInfo: jwt.sign({ id: user3._id, email: user3.email }, 'flitter', { expiresIn: '1h' })
+  });
+  const user4 = new User ({
+    username: 'muki',
+    email: 'silvikini@hotmail.com',
+    password: '123456',
+    jwtInfo: jwt.sign({ id: user4._id, email: user4.email }, 'flitter', { expiresIn: '1h' })
+  });
+  const user5 = new User ({
+    username: 'neli',
+    email: 'maantoana@gmail.com',
+    password: '123456',
+    jwtInfo: jwt.sign({ id: user5._id, email: user5.email }, 'flitter', { expiresIn: '1h' })
+  });
+  
+  // save new users in database
+  user1.save();
+  user2.save();
+  user3.save();
+  user4.save();
+  user5.save();
+  
+  users = [user1, user2, user3, user4, user5];
+  }
 
 async function initTweets() {
 
