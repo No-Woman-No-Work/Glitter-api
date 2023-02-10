@@ -45,28 +45,28 @@ async function initUsers() {
 
       // create 5 new users
       const user1 = new User ({
-            username: 'ananas',
-            email: 'ananas@gmail.com',
-            password: 'tururu'
+            username: 'sil',
+            email: 'pescadorlopezsilvia@gmail.com',
+            password: '123456'
       });
       const user2 = new User ({
-            username: 'banana',
-            email: 'banana@gmail.com',
+            username: 'mari',
+            email: 'xixiadecosta@gmail.com',
             password: 'tarara'
       });
       const user3 = new User ({
-            username: 'cherry',
-            email: 'cherry@gmail.com',
+            username: 'mollete',
+            email: 'pescadorlopezs@gmail.com',
             password: 'tiriri'
       });
       const user4 = new User ({
-            username: 'date',
-            email: 'date@gmail.com',
+            username: 'muki',
+            email: 'silvikini@hotmail.com',
             password: 'terere'
       });
       const user5 = new User ({
-            username: 'elderberry',
-            email: 'elderberry@gmail.com',
+            username: 'neli',
+            email: 'maantoana@gmail.com',
             password: 'tororo'
       });
 
