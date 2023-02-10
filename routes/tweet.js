@@ -46,31 +46,58 @@ tweetRouter.delete('/:tweetId', authMiddleware, (req, res) =>{
 
 // Listar tweet
 tweetRouter.get('/', (req, res) =>{
-    
-    // TODO move to middleware //  no lo he implementado por el uso de publicFeed
+
     const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
-    if(!token)
-    return publicFeed(req, res); 
-    //  {
-    //     return res.status(401).json({
-    //       error: 'Unauthorized user'
-    //     });
-    //   }
+    if(!token) {
+        console.log('no token');
+        return feed(req, res)
+    }
 
     try{
         const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
         req.jwtInfo = decoded
 
         console.log(decoded);
-        // next() -> cuando esté en middleware
 
     }catch(e){
         console.log(e);
         res.status(400).json('Token not valid')
         return
     }
-    // TODO hasta aquí
 
+    User.findOne({
+        _id: req.jwtInfo.user_id,
+    }, function (err, user) {
+        if (err || !user) {
+            res.sendStatus(404) 
+            return
+        }
+
+        feed(req, res, user.following)
+      });
+});
+
+tweetRouter.post('/:tweetId/kudos', authMiddleware, (req, res) =>{
+    
+    Tweet.updateOne({_id: req.params.tweetId},
+        {
+            $addToSet: {kudos: req.jwtInfo.user_id}
+        })
+        .then(tweet => res.sendStatus(200))
+        .catch(err => res.status(500).json(err))
+});
+
+tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
+    
+    Tweet.updateOne({_id: req.params.tweetId},
+        {
+            $pull: {kudos: req.jwtInfo.user_id}
+        })
+        .then(tweet => res.sendStatus(200))
+        .catch(err => res.status(500).json(err))
+});
+
+const feed = (req, res, followedAuthors) => {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
     const order = req.query.order || 'desc';
@@ -80,6 +107,7 @@ tweetRouter.get('/', (req, res) =>{
         publishDate: { $lte: new Date() }
     };
     if (search) query.$text = {$search: search};
+    if (followedAuthors) query.author = {$in: followedAuthors};
 
     var options = {
         page,
@@ -123,68 +151,7 @@ tweetRouter.get('/', (req, res) =>{
                 }
             );
         }
-    });
-});
-
-tweetRouter.post('/:tweetId/kudos', authMiddleware, (req, res) =>{
-    
-    Tweet.updateOne({_id: req.params.tweetId},
-        {
-            $addToSet: {kudos: req.jwtInfo.user_id}
-        })
-        .then(tweet => res.sendStatus(200))
-        .catch(err => res.status(500).json(err))
-});
-
-tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
-    
-    Tweet.updateOne({_id: req.params.tweetId},
-        {
-            $pull: {kudos: req.jwtInfo.user_id}
-        })
-        .then(tweet => res.sendStatus(200))
-        .catch(err => res.status(500).json(err))
-});
-
-const publicFeed = (req, res) => {
-    const page = req.query.page || 1;
-    const limit = req.query.limit || 10;
-    const order = req.query.order || 'desc';
-
-    const query = {
-        publishDate: { $lte: new Date() }
-    };
-
-    var options = {
-        page,
-        limit,
-        sort: { publishDate: order }
-    };
-
-    Tweet.paginate(query, options, (err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500).json(err);
-        } else {
-            Tweet.populate(
-                result.docs,
-                {
-                    path: 'author',
-                    select: '_id username'
-                },
-                (err, populateResult) => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json(err);
-                    } else {
-                        result.docs = populateResult;
-                        res.json(result);
-                    }
-                }
-            );
-        }
-    });
-            
+    });  
 }
 
 module.exports = tweetRouter
