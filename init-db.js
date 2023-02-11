@@ -87,7 +87,7 @@ async function initUsers() {
   });
   
   user5.jwtInfo = jwt.sign({ id: user5._id, email: user5.email }, 'flitter')
-  
+
   // save new users in database
   user1.save();
   user2.save();
@@ -96,6 +96,23 @@ async function initUsers() {
   user5.save();
   
   users = [user1, user2, user3, user4, user5];
+
+  // Añadimos following a los usuarios
+  for (let i = 0; i < users.length; i++) {
+    // seleccionamos dos usuarios aleatorios de la lista de usuarios
+    let randomUser1 = users[Math.floor(Math.random() * users.length)];
+    let randomUser2 = users[Math.floor(Math.random() * users.length)];
+
+    // añadimos los dos usuarios aleatorios a la lista de "following" del usuario actual
+    users[i].following.push(randomUser1._id, randomUser2._id);
+
+    // esperamos antes de guardar el usuario actual con sus cambios (mongoDb no nos deja guardar en paralelo)
+    await new Promise(resolve => setTimeout(resolve, 50));
+  
+    // guardamos el usuario actual con sus cambios
+    await users[i].save();
+  }
+
   }
 
 async function initTweets() {
