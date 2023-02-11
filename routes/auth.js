@@ -1,5 +1,6 @@
 const express = require('express');
 const jsonwebtoken = require("jsonwebtoken");
+const authMiddleware = require('../authMiddleware');
 const crypto = require('crypto')
 const Mailjet = require('node-mailjet');
 
@@ -141,34 +142,11 @@ authRouter.post('/reset-password', (req, res) =>{
 });
 
 // verifiación de si el token es correcto ( para authGuard)
-authRouter.post('/verify-token', (req, res) => {
-    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
-
-    if (!token) {
-      return res.status(401).json({
-        error: 'Unauthorized user'
-      });
-    }
-  
-    try {
-      const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
-      req.jwtInfo = decoded;
-      
-      res.status(200).json({
+authRouter.get('/verify-token', authMiddleware, (req, res) => {
+    res.status(200).json({
         message: 'Token is valid',
-        user: decoded
-      });
-    
-    } catch (e) {
-      return res.status(400).json({
-        error: 'Token not valid'
-      });
-    }
-  });
-  
-
-
-
-
+        user: req.jwtInfo.user_id
+    });
+});
 
 module.exports = authRouter

@@ -61,7 +61,7 @@ tweetRouter.get('/', (req, res) =>{
 
     }catch(e){
         console.log(e);
-        res.status(400).json('Token not valid')
+        res.status(401).json('Token not valid')
         return
     }
 

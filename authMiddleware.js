@@ -17,7 +17,7 @@ function authMiddleware(req, res, next) {
 
   } catch (e) {
     console.log(e);
-    res.status(400).json({
+    res.status(401).json({
       error: 'Token not valid'
     });
     return 

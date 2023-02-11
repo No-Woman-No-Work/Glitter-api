@@ -51,9 +51,7 @@ async function initUsers() {
     password: '123456',
     following: []
   });
-
-  user1.jwtInfo = jwt.sign({ id: user1._id, email: user1.email }, 'flitter')
-  user1.save();
+  await user1.save();
 
   const user2 = new User ({
     _id: new ObjectId(),
@@ -62,8 +60,7 @@ async function initUsers() {
     password: '123456',
     following: []
   });
-  user2.jwtInfo = jwt.sign({ id: user2._id, email: user2.email }, 'flitter')
-  user2.save();
+  await user2.save();
 
   const user3 = new User ({
     _id: new ObjectId(),
@@ -72,9 +69,7 @@ async function initUsers() {
     password: '123456',
     following: [user2._id, user1._id]
   });
-  
-  user3.jwtInfo = jwt.sign({ id: user3._id, email: user3.email }, 'flitter')
-  user3.save();
+  await user3.save();
 
   const user4 = new User ({
     _id: new ObjectId(),
@@ -83,9 +78,7 @@ async function initUsers() {
     password: '123456',
     following: [user2._id, user1._id, user3._id]
   });
-  
-  user4.jwtInfo = jwt.sign({ id: user4._id, email: user4.email }, 'flitter')
-  user4.save();
+  await user4.save();
 
   const user5 = new User ({
     _id: new ObjectId(),
@@ -95,13 +88,12 @@ async function initUsers() {
     following: [user2._id, user1._id, user3._id]
 
   });
-
-  user5.jwtInfo = jwt.sign({ id: user5._id, email: user5.email }, 'flitter')
-  user5.save();
+  await user5.save();
   
   
   users = [user1, user2, user3, user4, user5];
 
+  console.log(`Created ${users.length} users.`)
 }
 
 async function initTweets() {
@@ -159,7 +151,6 @@ async function initTweets() {
     }
   ]);
   console.log(`Created ${inserted.length} tweets.`);
-  console.log(`Created ${users.length} users.`)
 }
 
 // función pregunta si/no a borrar la base de datos anterior
@@ -180,6 +171,3 @@ function question(text) {
     })
   })
 }
-
-
-
