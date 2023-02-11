@@ -46,24 +46,9 @@ tweetRouter.delete('/:tweetId', authMiddleware, (req, res) =>{
 
 // Listar tweet
 tweetRouter.get('/', (req, res) =>{
-
-    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
-    if(!token) {
-        console.log('no token');
-        return feed(req, res)
-    }
-
-    try{
-        const decoded = jsonwebtoken.verify(token, req.app.locals.JWT_SECRET);
-        req.jwtInfo = decoded
-
-        console.log(decoded);
-
-    }catch(e){
-        console.log(e);
-        res.status(401).json('Token not valid')
-        return
-    }
+    feed(req, res)
+});
+tweetRouter.get('/private', authMiddleware, (req, res) =>{
 
     User.findOne({
         _id: req.jwtInfo.user_id,
