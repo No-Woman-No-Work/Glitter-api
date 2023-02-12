@@ -107,6 +107,7 @@ const feed = (req, res, followedAuthors) => {
         {
             $project: {
                 text: 1,
+                imagePath: 1,
                 publishDate: 1,
                 author: 1,
                 kudos: { $size: "$kudos" }

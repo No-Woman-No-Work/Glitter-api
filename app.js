@@ -21,9 +21,7 @@ app.use(cors())
 app.use('/auth', require('./routes/auth'));
 app.use('/tweets', require('./routes/tweets'));
 app.use('/users', require('./routes/users'));
-
-// const response = require('./lib/response'); // añadido ?? 
-// app.use(response);
+app.use(express.static('./public'));
 
 app.listen(3000, () => console.log('Flitter is listening in 3000'));
 

@@ -106,6 +106,7 @@ async function initTweets() {
   const inserted = await Tweet.insertMany([
     {
       text: "I love coding!",
+      imagePath: "",
       publishDate: Date.now(),
       author: users[0]._id,
       kudos: [
@@ -116,6 +117,7 @@ async function initTweets() {
     },
     {
       text: "Learning Node.js is so much fun!",
+      imagePath: "",
       publishDate: Date.now(),
       author: users[1]._id,
       kudos: [
@@ -125,6 +127,7 @@ async function initTweets() {
     },
     {
       text: "Express is the best backend framework!",
+      imagePath: "",
       publishDate: Date.now(),
       author: users[2]._id,
       kudos: [
@@ -134,6 +137,7 @@ async function initTweets() {
     },
     {
       text: "MongoDB is my favorite database!",
+      imagePath: "",
       publishDate: Date.now(),
       author: users[3]._id,
       kudos: [
@@ -142,6 +146,17 @@ async function initTweets() {
     },
     {
       text: "JWT is a great way to handle authentication!",
+      imagePath: "",
+      publishDate: Date.now(),
+      author: users[4]._id,
+      kudos: [
+        users[1]._id,
+        users[3]._id
+      ]
+    },
+    {
+      text: "Look mum I have an image",
+      imagePath: "/uploads/zebra.webp",
       publishDate: Date.now(),
       author: users[4]._id,
       kudos: [

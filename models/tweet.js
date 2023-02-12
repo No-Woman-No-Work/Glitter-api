@@ -7,6 +7,11 @@ const tweetSchema = new mongoose.Schema({
         required: false,
         maxlength: 256
     },
+    imagePath: {
+        type: String,
+        required: false,
+        maxlength: 1000
+    },
     publishDate: {
         type: Date,
         required: true,
