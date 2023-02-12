@@ -145,6 +145,7 @@ authRouter.post('/reset-password', (req, res) =>{
 authRouter.get('/verify-token', authMiddleware, (req, res) => {
     res.status(200).json({
         message: 'Token is valid',
+        authenticated: true,
         user: req.jwtInfo.user_id
     });
 });
