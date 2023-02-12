@@ -31,8 +31,8 @@ userRouter.delete("/:userId/unfollow", authMiddleware, (req, res) => {
 });
 
 //Retrieve user data
-userRouter.get("/:userId", authMiddleware, (req, res) => {
-  User.findOne({ _id: req.params.userId })
+userRouter.get("/", authMiddleware, (req, res) => {
+  User.findOne({ _id: req.jwtInfo.user_id })
     .then((user) => {
       if (!user) {
         return res.status(404).send({ error: "User not found" });
