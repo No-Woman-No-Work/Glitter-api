@@ -42,4 +42,16 @@ userRouter.get("/", authMiddleware, (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
+//Delete user from database
+userRouter.delete("/", authMiddleware, (req, res) => {
+  User.deleteOne({ _id: req.jwtInfo.user_id })
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        return res.status(404).send({ error: "User not found" });
+      }
+      res.status(200).send({ message: "User deleted successfully" });
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
 module.exports = userRouter;
