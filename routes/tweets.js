@@ -1,23 +1,32 @@
 const express = require('express');
 const jsonwebtoken = require("jsonwebtoken");
 const authMiddleware = require('../authMiddleware');
+const multer = require('multer');
 
 const User = require('../models/user');
 const Tweet = require('../models/tweet');
 
 const tweetRouter = express.Router();
 
+// Create multer object
+const imageUpload = multer({
+    dest: 'public/uploads/',
+});
+
 // Create new tweet
-tweetRouter.post('/', authMiddleware, (req, res) =>{
+tweetRouter.post('/', authMiddleware, imageUpload.single('image'), (req, res) =>{
    
-    if (!req.body.text) {
+console.log(req.file)
+console.log(req.body)
+
+    if (!req.body.text && !req.file) {
         res.sendStatus(400)
         return
     }
 
-    console.log('successfully validated JWT')
     const newTweet = new Tweet({
         text: req.body.text,
+        imagePath: req.file ? '/uploads/' + req.file.filename : '',
         publishDate: req.body.publishDate || Date.now(),
         author: req.jwtInfo.user_id
     })
