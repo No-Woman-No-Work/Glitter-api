@@ -163,7 +163,7 @@ async function initTweets() {
         users[1]._id,
         users[3]._id
       ]
-    }
+    },
     {
       text: "Ola ke ase",
       imagePath: "/uploads/olakease.jpg",
