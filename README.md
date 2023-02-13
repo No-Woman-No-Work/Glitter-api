@@ -1,6 +1,13 @@
-## Introduction
-pasar a ingles -->  Parte del proyecto final del Bootcamp Mujeres in Tech (Glovo - Keepcoding). En este caso desarrollamos una app con Node.js, que utiliza MongoDb como base de datos, Mongoose para su conexión y Express. Tiene una API REST con la que gestionamos los datos de nuestro Flitter, una socialmedia creada con VUE 3.
+# FLITTER
+Link: [Flitter design doc](https://github.com/No-Woman-No-Work/flitter/blob/main/README.md)
 
+Backend: [Flitter backend](https://github.com/No-Woman-No-Work/v1-Flitter-Back-)
+
+Author(s): Andrea Ares Fernandez, Emma Alonso McCoy, Nelanyi Ruiz Contreras, Silvia Pescador López, Mariana Antoniol.
+
+Status: [Draft]
+
+Última actualización: 13/02/2023
 
 ### Install mongoDB
 > brew tap mongodb/brew
