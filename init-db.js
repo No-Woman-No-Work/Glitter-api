@@ -58,7 +58,7 @@ async function initUsers() {
     username: 'mari',
     email: 'xixiadecosta@gmail.com',
     password: '123456',
-    following: []
+    following: [user1._id]
   });
   await user2.save();
 
@@ -137,7 +137,7 @@ async function initTweets() {
     },
     {
       text: "MongoDB is my favorite database!",
-      imagePath: "",
+      imagePath: "/uploads/working.webp",
       publishDate: Date.now(),
       author: users[3]._id,
       kudos: [
@@ -145,8 +145,8 @@ async function initTweets() {
       ]
     },
     {
-      text: "JWT is a great way to handle authentication!",
-      imagePath: "",
+      text: "Be proud of who you are",
+      imagePath: "/uploads/orgullo.webp",
       publishDate: Date.now(),
       author: users[4]._id,
       kudos: [
@@ -157,6 +157,66 @@ async function initTweets() {
     {
       text: "Look mum I have an image",
       imagePath: "/uploads/zebra.webp",
+      publishDate: Date.now(),
+      author: users[4]._id,
+      kudos: [
+        users[1]._id,
+        users[3]._id
+      ]
+    }
+    {
+      text: "Ola ke ase",
+      imagePath: "/uploads/olakease.jpg",
+      publishDate: Date.now(),
+      author: users[0]._id,
+      kudos: [
+        users[2]._id,
+        users[3]._id,
+        users[4]._id
+      ]
+    },
+    {
+      text: "Love yourself first, because that´s who you´ll be spending the rest of your life with.",
+      imagePath: "/uploads/love.jpg",
+      publishDate: Date.now(),
+      author: users[1]._id,
+      kudos: [
+        users[1]._id,
+        users[3]._id
+      ]
+    },
+    {
+      text: "Codes all day long in javascript... Code doesn´t run:",
+      imagePath: "/uploads/foreveralone.jpg",
+      publishDate: Date.now(),
+      author: users[2]._id,
+      kudos: [
+        users[1]._id,
+        users[2]._id
+      ]
+    },
+    {
+      text: "Whoooops... Sorry! I forgot doing git pull",
+      imagePath: "/uploads/firegirl.jpg",
+      publishDate: Date.now(),
+      author: users[3]._id,
+      kudos: [
+        users[2]._id
+      ]
+    },
+    {
+      text: "I´m so proud of working together my friend!",
+      imagePath: "/uploads/codingGirls.jfif",
+      publishDate: Date.now(),
+      author: users[4]._id,
+      kudos: [
+        users[1]._id,
+        users[3]._id
+      ]
+    },
+    {
+      text: "Come on! ",
+      imagePath: "/uploads/bravekid.jpg",
       publishDate: Date.now(),
       author: users[4]._id,
       kudos: [
