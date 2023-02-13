@@ -105,8 +105,8 @@ async function initTweets() {
   // crear Tweets iniciales
   const inserted = await Tweet.insertMany([
     {
-      text: "I love coding!",
-      imagePath: "",
+      text: "❤I love coding!",
+      imagePath: "/uploads/ilovecoding.jpg",
       publishDate: Date.now(),
       author: users[0]._id,
       kudos: [
@@ -116,8 +116,8 @@ async function initTweets() {
       ]
     },
     {
-      text: "Learning Node.js is so much fun!",
-      imagePath: "",
+      text: "When MongoDb doesn´t feed you:",
+      imagePath: "/uploads/please-sir.jpg",
       publishDate: Date.now(),
       author: users[1]._id,
       kudos: [
@@ -126,7 +126,7 @@ async function initTweets() {
       ]
     },
     {
-      text: "Express is the best backend framework!",
+      text: "I´m on a seafood diet. I see food and i eat it.🤣",
       imagePath: "",
       publishDate: Date.now(),
       author: users[2]._id,
@@ -136,7 +136,7 @@ async function initTweets() {
       ]
     },
     {
-      text: "MongoDB is my favorite database!",
+      text: "New working day here!",
       imagePath: "/uploads/working.webp",
       publishDate: Date.now(),
       author: users[3]._id,
@@ -145,7 +145,7 @@ async function initTweets() {
       ]
     },
     {
-      text: "Be proud of who you are",
+      text: "Be proud of who you are 💕",
       imagePath: "/uploads/orgullo.webp",
       publishDate: Date.now(),
       author: users[4]._id,
@@ -177,7 +177,7 @@ async function initTweets() {
     },
     {
       text: "Love yourself first, because that´s who you´ll be spending the rest of your life with.",
-      imagePath: "/uploads/love.jpg",
+      imagePath: "/uploads/loveurself.jpg",
       publishDate: Date.now(),
       author: users[1]._id,
       kudos: [
@@ -186,7 +186,7 @@ async function initTweets() {
       ]
     },
     {
-      text: "Codes all day long in javascript... Code doesn´t run:",
+      text: "💻 Codes all day long in javascript... Code doesn´t run:",
       imagePath: "/uploads/foreveralone.jpg",
       publishDate: Date.now(),
       author: users[2]._id,
@@ -196,7 +196,7 @@ async function initTweets() {
       ]
     },
     {
-      text: "Whoooops... Sorry! I forgot doing git pull",
+      text: "Whoooops... Sorry! I forgot doing git pull 🧨",
       imagePath: "/uploads/firegirl.jpg",
       publishDate: Date.now(),
       author: users[3]._id,
@@ -215,7 +215,7 @@ async function initTweets() {
       ]
     },
     {
-      text: "Come on! ",
+      text: "i´m not just 'special', i´m a LIMITED EDITION.",
       imagePath: "/uploads/bravekid.jpg",
       publishDate: Date.now(),
       author: users[4]._id,
