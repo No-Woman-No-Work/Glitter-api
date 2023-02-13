@@ -177,7 +177,7 @@ async function initTweets() {
     },
     {
       text: "Love yourself first, because that´s who you´ll be spending the rest of your life with.",
-      imagePath: "/uploads/loveurself.jpg",
+      imagePath: "/uploads/loveurself.jpeg",
       publishDate: Date.now(),
       author: users[1]._id,
       kudos: [
