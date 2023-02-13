@@ -47,7 +47,7 @@ async function initUsers() {
   const user1 = new User ({
     _id: new ObjectId(),
     username: 'sil',
-    email: 'pescadorlopezsilvia@gmail.com',
+    email: 'hello_sil@gmail.com',
     password: '123456',
     following: []
   });
@@ -56,7 +56,7 @@ async function initUsers() {
   const user2 = new User ({
     _id: new ObjectId(),
     username: 'mari',
-    email: 'xixiadecosta@gmail.com',
+    email: 'hello_mari@gmail.com',
     password: '123456',
     following: [user1._id]
   });
@@ -65,7 +65,7 @@ async function initUsers() {
   const user3 = new User ({
     _id: new ObjectId(),
     username: 'mollete',
-    email: 'pescadorlopezs@gmail.com',
+    email: 'hello_mollete@gmail.com',
     password: '123456',
     following: [user2._id, user1._id]
   });
@@ -74,7 +74,7 @@ async function initUsers() {
   const user4 = new User ({
     _id: new ObjectId(),
     username: 'muki',
-    email: 'silvikini@hotmail.com',
+    email: 'hello_muki@hotmail.com',
     password: '123456',
     following: [user2._id, user1._id, user3._id]
   });
@@ -83,7 +83,7 @@ async function initUsers() {
   const user5 = new User ({
     _id: new ObjectId(),
     username: 'neli',
-    email: 'maantoana@gmail.com',
+    email: 'hello_neli@gmail.com',
     password: '123456',
     following: [user2._id, user1._id, user3._id]
 
