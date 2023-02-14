@@ -94,7 +94,9 @@ tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
 });
 
 
-// ahora también devuelve no solo la lista de consulta sino el número de tweets totales y el numero de following
+// ahora también devuelve no solo la lista de consulta sino el número de tweets totales y el numero de tweets de los seguidos
+// esto es util para la paginación en las distintas zonas publicas y privada.
+
 const feed = (req, res, followedAuthors) => {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
@@ -119,57 +121,70 @@ const feed = (req, res, followedAuthors) => {
             res.status(500).json(err);
         } else {
             const totalTweets = count;
-            const numFollowedAuthors = followedAuthors ? followedAuthors.length : 0;
 
-            const aggregate = Tweet.aggregate([
-                {
-                    $match: query
-                },
-                {
-                    $project: {
-                        text: 1,
-                        imagePath: 1,
-                        publishDate: 1,
-                        author: 1,
-                        kudos: { $size: "$kudos" }
-                    }
-                }
-            ]);
-
-            Tweet.aggregatePaginate(aggregate, options, (err, result) =>{
+            // Consulta separada para obtener el número total de tweets de los autores seguidos
+            const followedAuthorsQuery = {
+                author: {$in: followedAuthors}
+            };
+            Tweet.countDocuments(followedAuthorsQuery, (err, followedAuthorsTotalTweets) => {
                 if (err) {
                     console.log(err);
                     res.status(500).json(err);
                 } else {
-
-                    Tweet.populate(
-                        result.docs,
+                    const aggregate = Tweet.aggregate([
                         {
-                            path: 'author',
-                            select: '_id username'
+                            $match: query
                         },
-                        (err, populateResult) =>{
-                            if (err) {
-                                console.log(err);
-                                res.status(500).json(err);
-                            } else {
-                                result.docs = populateResult
-                                res.json({
-                                    totalTweets,
-                                    numFollowedAuthors,
-                                    ...result
-                                });
+                        {
+                            $project: {
+                                text: 1,
+                                imagePath: 1,
+                                publishDate: 1,
+                                author: 1,
+                                kudos: { $size: "$kudos" }
                             }
                         }
-                        );
-                    }
-                });  
-            }
-        });
-    }
-    
+                    ]);
+
+                    Tweet.aggregatePaginate(aggregate, options, (err, result) =>{
+                        if (err) {
+                            console.log(err);
+                            res.status(500).json(err);
+                        } else {
+                            Tweet.populate(
+                                result.docs,
+                                {
+                                    path: 'author',
+                                    select: '_id username'
+                                },
+                                (err, populateResult) =>{
+                                    if (err) {
+                                        console.log(err);
+                                        res.status(500).json(err);
+                                    } else {
+                                        result.docs = populateResult
+                                        // Incluir el número total de tweets de los autores seguidos en el objeto de respuesta
+                                        res.json({
+                                            totalTweets,
+                                            followedAuthorsTotalTweets,
+                                            ...result
+                                        });
+                                    }
+                                }
+                            );
+                        }
+                    });  
+                }
+            });
+        }
+    });
+}
+
+
 module.exports = tweetRouter
 
+
+// COMO ESTABA DIA 14 POR LA MAÑANA 
 
 // const feed = (req, res, followedAuthors) => {
 //     const page = req.query.page || 1;
