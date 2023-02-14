@@ -77,7 +77,8 @@ tweetRouter.post('/:tweetId/kudos', authMiddleware, (req, res) =>{
         {
             $addToSet: {kudos: req.jwtInfo.user_id}
         })
-        .then(tweet => res.sendStatus(200))
+        .then(() => Tweet.findById(req.params.tweetId))
+        .then(tweet => res.status(200).json({kudosSize: tweet.kudos.length}))
         .catch(err => res.status(500).json(err))
 });
 
@@ -87,7 +88,8 @@ tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
         {
             $pull: {kudos: req.jwtInfo.user_id}
         })
-        .then(tweet => res.sendStatus(200))
+        .then(() => Tweet.findById(req.params.tweetId))
+        .then(tweet => res.status(200).json({kudosSize: tweet.kudos.length}))
         .catch(err => res.status(500).json(err))
 });
 
