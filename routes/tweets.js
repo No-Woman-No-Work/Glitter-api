@@ -93,6 +93,8 @@ tweetRouter.delete('/:tweetId/kudos',authMiddleware, (req, res) =>{
         .catch(err => res.status(500).json(err))
 });
 
+
+// ahora también devuelve no solo la lista de consulta sino el número de tweets totales y el numero de following
 const feed = (req, res, followedAuthors) => {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
@@ -111,44 +113,119 @@ const feed = (req, res, followedAuthors) => {
     };
     options.sort = {'publishDate' : order};
 
-    aggregate = Tweet.aggregate([
-        {
-            $match: query
-        },
-        {
-            $project: {
-                text: 1,
-                imagePath: 1,
-                publishDate: 1,
-                author: 1,
-                kudos: { $size: "$kudos" }
-            }
-        }
-    ]);
-    Tweet.aggregatePaginate(aggregate, options, (err, result) =>{
+    Tweet.countDocuments(query, (err, count) => {
         if (err) {
             console.log(err);
             res.status(500).json(err);
         } else {
+            const totalTweets = count;
+            const numFollowedAuthors = followedAuthors ? followedAuthors.length : 0;
 
-            Tweet.populate(
-                result.docs,
+            const aggregate = Tweet.aggregate([
                 {
-                    path: 'author',
-                    select: '_id username'
+                    $match: query
                 },
-                (err, populateResult) =>{
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json(err);
-                    } else {
-                        result.docs = populateResult
-                        res.json(result);
+                {
+                    $project: {
+                        text: 1,
+                        imagePath: 1,
+                        publishDate: 1,
+                        author: 1,
+                        kudos: { $size: "$kudos" }
                     }
                 }
-            );
-        }
-    });  
-}
+            ]);
 
+            Tweet.aggregatePaginate(aggregate, options, (err, result) =>{
+                if (err) {
+                    console.log(err);
+                    res.status(500).json(err);
+                } else {
+
+                    Tweet.populate(
+                        result.docs,
+                        {
+                            path: 'author',
+                            select: '_id username'
+                        },
+                        (err, populateResult) =>{
+                            if (err) {
+                                console.log(err);
+                                res.status(500).json(err);
+                            } else {
+                                result.docs = populateResult
+                                res.json({
+                                    totalTweets,
+                                    numFollowedAuthors,
+                                    ...result
+                                });
+                            }
+                        }
+                        );
+                    }
+                });  
+            }
+        });
+    }
+    
 module.exports = tweetRouter
+
+
+// const feed = (req, res, followedAuthors) => {
+//     const page = req.query.page || 1;
+//     const limit = req.query.limit || 10;
+//     const order = req.query.order || 'desc';
+//     const search = req.query.search;
+
+//     const query = {
+//         publishDate: { $lte: new Date() }
+//     };
+//     if (search) query.$text = {$search: search};
+//     if (followedAuthors) query.author = {$in: followedAuthors};
+
+//     var options = {
+//         page,
+//         limit
+//     };
+//     options.sort = {'publishDate' : order};
+
+//     aggregate = Tweet.aggregate([
+//         {
+//             $match: query
+//         },
+//         {
+//             $project: {
+//                 text: 1,
+//                 imagePath: 1,
+//                 publishDate: 1,
+//                 author: 1,
+//                 kudos: { $size: "$kudos" }
+//             }
+//         }
+//     ]);
+
+//     Tweet.aggregatePaginate(aggregate, options, (err, result) =>{
+//         if (err) {
+//             console.log(err);
+//             res.status(500).json(err);
+//         } else {
+
+//             Tweet.populate(
+//                 result.docs,
+//                 {
+//                     path: 'author',
+//                     select: '_id username'
+//                 },
+//                 (err, populateResult) =>{
+//                     if (err) {
+//                         console.log(err);
+//                         res.status(500).json(err);
+//                     } else {
+//                         result.docs = populateResult
+//                         res.json(result);
+//                     }
+//                 }
+//             );
+//         }
+//     });  
+// }
