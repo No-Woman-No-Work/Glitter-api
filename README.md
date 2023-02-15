@@ -16,10 +16,10 @@ Last updated: 13/02/2023
 - Background
 - Design and Architecture
 - Considerations
-# FLITTER
-Link: [Flitter design doc](https://github.com/No-Woman-No-Work/flitter/blob/main/README.md)
+# GLITTER
+Link: [Glitter design doc](https://github.com/No-Woman-No-Work/Glitter-api/blob/main/README.md)
 
-Backend: [Flitter backend](https://github.com/No-Woman-No-Work/v1-Flitter-Back-)
+Backend: [Glitter backend](https://github.com/No-Woman-No-Work/Glitter-api/blob/main/README.md)
 
 Author(s): Andrea Ares Fernandez, Emma Alonso McCoy, Nelanyi Ruiz Contreras, Silvia Pescador López, Mariana Antoniol.
 
@@ -37,7 +37,7 @@ Last update: 15/02/2023
 
 
 ## Downloading
-Flitter is currently hosted on GitHub. The frontend of the project can be found at [this link](https://github.com/No-Woman-No-Work/flitter), and the backend can be found at [this link](https://github.com/No-Woman-No-Work/v1-Flitter-Back-).
+Flitter is currently hosted on GitHub. The frontend of the project can be found at [this link](https://github.com/No-Woman-No-Work/Glitter-Vue), and the backend can be found at [this link](https://github.com/No-Woman-No-Work/Glitter-api).
 
 If you want to follow the development of the Flitter frontend, you can download the source code via Git clone.
 
@@ -56,13 +56,13 @@ npm install
 Initialise a new database with the default injected data in the glitter collection
 
 ```
-node init-db.js
+node init-db.js  // npm run init-db
 ```
 
 Start the server
 
 ```
-npm start
+node app.js      //   npm start
 ```
 
 ## Endpoints
