@@ -67,16 +67,18 @@ node app.js      //   npm start
 
 ## Endpoints
 
+URL base = http://localhost:3000
+
 ### User register
-**POST /register**
+**POST /auth/register**
 Register a new user.
 
 ### User login
-**POST /login**
+**POST /auth/login**
 Log in a user and return a JSON Web Token.
 
 ### Verify token
-**GET /verify-token**
+**GET /auth/verify-token**
 Verify if the token is correct.
 
 ### Forgot password
@@ -84,31 +86,32 @@ Verify if the token is correct.
 Create a recoverPasswordToken and send an email to the user.
 
 ### Reset password
-**POST /reset-password**
+**POST /auth/reset-password**
 Reset a user's password once the recoverPasswordToken has been confirmed.
 
 ### List glits
-- For the public zone: **GET /** 
-- For the private zone: **GET /private** 
+- For the public zone: **GET /glits/** 
+- For the private zone: **GET /glits/private** 
 
 ### Create new glit
-**POST /**
-http://localhost:3000/
+**POST /glits/**
+Optional image upload.
 
 ### Delete glit
-**DELETE /:glitId**
+**DELETE /glits/:glitId**
+Only delete glit of logged author.
 
 ### Give kudos to a glit
 **POST /:glitId/kudos**
 
 ### Delete kudos to a glit
-**DELETE /:glitId/kudos**
+**DELETE /glits/:glitId/kudos**
 
 ### Follow new user
-**POST /:userId/follow**
-
+**POST /users/:userId/follow**
+User logged cannot follow himself.
 ### Unfollow new user
-**DELETE /:userId/follow**
+**DELETE /users/:userId/follow**
 
 
 ## Goals
