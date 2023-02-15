@@ -106,8 +106,8 @@ const forgotPasswordSuccess = (req, res, user) => {
   const recoverPassUrl =
     "http://localhost:8080/new-password/" + user.recoverPasswordToken;
   const mailjet = new Mailjet({
-    apiKey: "cf1b66c0eb365dfc5edefb723c247a97",
-    apiSecret: "184a66a1cf03483c9305c0f3fb96d91c",
+    apiKey: "XXXXXXXXXXXXXX",
+    apiSecret: "XXXXXXXXXXXXXX",
   });
 
   const request = mailjet
