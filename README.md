@@ -37,9 +37,9 @@ Last update: 15/02/2023
 
 
 ## Downloading
-Flitter is currently hosted on GitHub. The frontend of the project can be found at [this link](https://github.com/No-Woman-No-Work/Glitter-Vue), and the backend can be found at [this link](https://github.com/No-Woman-No-Work/Glitter-api).
+Glitter is currently hosted on GitHub. The frontend of the project can be found at [this link](https://github.com/No-Woman-No-Work/Glitter-Vue), and the backend can be found at [this link](https://github.com/No-Woman-No-Work/Glitter-api).
 
-If you want to follow the development of the Flitter frontend, you can download the source code via Git clone.
+If you want to follow the development of the Glitter frontend, you can download the source code via Git clone.
 
 ```
 git clone + project link
@@ -117,9 +117,9 @@ User logged cannot follow himself.
 ## Goals
 Final Project for the Women in Tech Bootcamp.
 
-The aim of this project is to apply all the acquired skills, simulating a real situation: the development of a project using iterations and making architectural decisions within a deadline, which is the reason why we decided to develop Flitter.
+The aim of this project is to apply all the acquired skills, simulating a real situation: the development of a project using iterations and making architectural decisions within a deadline, which is the reason why we decided to develop Glitter.
 
-_Flitter is a micro-content platform created with the following objectives:_ 
+_Glitter is a micro-content platform created with the following objectives:_ 
 
 - To provide a user-friendly interface that provides a simple navigation and interaction with the application.
 
@@ -143,13 +143,13 @@ _Flitter is a micro-content platform created with the following objectives:_
 It is a good time to create an alternative platform to Twitter given the situation that Twitter is going through. We believe that this is an ideal project to boost our backend and frontend skills to meet the needs and provide value.
 
 ## Design and Architecture
-Flitter is a web application developed with a cutting-edge technology stack. It consists of a backend built with Node.js, Express, and MongoDB, and a frontend developed with Javascript and the Vue 3 framework.
+Glitter is a web application developed with a cutting-edge technology stack. It consists of a backend built with Node.js, Express, and MongoDB, and a frontend developed with Javascript and the Vue 3 framework.
 
-Flitter's frontend has been built with Vue Composition API and styled with Bootstrap. The connection with the backend has been made via Axios, while Vuex has been used as a state handler. In addition, adaptations (transpilers) to older Javascript engines, such as Babel and Webpack, have been implemented to ensure cross-browser compatibility.
+Glitter's frontend has been built with Vue Composition API and styled with Bootstrap. The connection with the backend has been made via Axios, while Vuex has been used as a state handler. In addition, adaptations (transpilers) to older Javascript engines, such as Babel and Webpack, have been implemented to ensure cross-browser compatibility.
 
-The Flitter backend uses Mongoose to connect to the noSQL MongoDB database. It has an authentication system based on Json Web Token and a mailing system implemented with MailJet. In addition, internal development testing tools, such as Postman, have been used to ensure the quality and stability of the application.
+The Glitter backend uses Mongoose to connect to the noSQL MongoDB database. It has an authentication system based on Json Web Token and a mailing system implemented with MailJet. In addition, internal development testing tools, such as Postman, have been used to ensure the quality and stability of the application.
 
-In short, Flitter is a powerful and versatile web application, built with the latest technologies and adapted to work on all devices thanks to its responsive design.
+In short, Glitter is a powerful and versatile web application, built with the latest technologies and adapted to work on all devices thanks to its responsive design.
 
 ![input](https://user-images.githubusercontent.com/50715363/218560841-5ae5c39a-f3d8-4b0e-aab0-e9fe8a2cf7b6.png)
 
