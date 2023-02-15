@@ -10,6 +10,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const ObjectId = mongoose.Types.ObjectId;
 
+
+
 async function main() {
   // Ask the user to confirm if they are sure
   const nextStep = await question("Do you want to delete the database? [y/n]");
@@ -33,6 +35,9 @@ async function main() {
 main().catch((err) => console.log("Error", err));
 
 let users = [];
+
+
+
 
 async function initUsers() {
   // delete all users in database
