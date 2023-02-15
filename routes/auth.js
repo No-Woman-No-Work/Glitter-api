@@ -8,6 +8,8 @@ const User = require("../models/user");
 
 const authRouter = express.Router();
 
+
+// User register
 authRouter.post("/register", (req, res) => {
   User.findOne(
     { $or: [{ username: req.body.username }, { email: req.body.email }] },
@@ -37,6 +39,7 @@ authRouter.post("/register", (req, res) => {
   );
 });
 
+// User login
 authRouter.post("/login", (req, res) => {
   User.findOne(
     {
@@ -59,6 +62,18 @@ authRouter.post("/login", (req, res) => {
   );
 });
 
+// verify if the token is correct (for authGuard)
+authRouter.get("/verify-token", authMiddleware, (req, res) => {
+  res.status(200).json({
+    message: "Token is valid",
+    authenticated: true,
+    user: req.jwtInfo.user_id,
+  });
+});
+
+// NOT USED YET 
+
+// Forgot password -- create recoverPasswordToken - send mailjet to confirm -
 authRouter.post("/forgot-password", (req, res) => {
   console.log(req.body);
 
@@ -132,6 +147,8 @@ const forgotPasswordSuccess = (req, res, user) => {
     });
 };
 
+
+// reset password once obtained mailjet and confirmed recoverPasswordToken
 authRouter.post("/reset-password", (req, res) => {
   console.log(req.body);
   res.status(200);
@@ -163,13 +180,6 @@ authRouter.post("/reset-password", (req, res) => {
   );
 });
 
-// verify if the token is correct (for authGuard)
-authRouter.get("/verify-token", authMiddleware, (req, res) => {
-  res.status(200).json({
-    message: "Token is valid",
-    authenticated: true,
-    user: req.jwtInfo.user_id,
-  });
-});
+
 
 module.exports = authRouter;

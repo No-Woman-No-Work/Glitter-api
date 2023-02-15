@@ -1,5 +1,4 @@
 const express = require("express");
-const jsonwebtoken = require("jsonwebtoken");
 const authMiddleware = require("../authMiddleware");
 const multer = require("multer");
 
@@ -8,16 +7,13 @@ const Glit = require("../models/glit");
 
 const glitRouter = express.Router();
 
-// Create multer object
+// Create multer object 
 const imageUpload = multer({
   dest: "public/uploads/",
 });
 
-// Create new glit
-glitRouter.post(
-  "/",
-  authMiddleware,
-  imageUpload.single("image"),
+// Create new glit with image or not
+glitRouter.post("/", authMiddleware, imageUpload.single("image"),
   (req, res) => {
     console.log(req.file);
     console.log(req.body);
@@ -41,7 +37,7 @@ glitRouter.post(
   }
 );
 
-// Delete glit
+// Delete glit (only yours)
 glitRouter.delete("/:glitId", authMiddleware, (req, res) => {
   Glit.deleteOne({
     $and: [{ _id: req.params.glitId }, { author: req.jwtInfo.user_id }],
@@ -57,9 +53,12 @@ glitRouter.delete("/:glitId", authMiddleware, (req, res) => {
 });
 
 // List glits
+// Public zone -- All Glits sorted 'desc'
 glitRouter.get("/", (req, res) => {
   feed(req, res);
 });
+
+// Private zone -- Default-> only Glits of followed people
 glitRouter.get("/private", authMiddleware, (req, res) => {
   User.findOne(
     {
@@ -76,6 +75,7 @@ glitRouter.get("/private", authMiddleware, (req, res) => {
   );
 });
 
+// Give kudos to a Glit
 glitRouter.post("/:glitId/kudos", authMiddleware, (req, res) => {
   Glit.updateOne(
     { _id: req.params.glitId },
@@ -88,6 +88,7 @@ glitRouter.post("/:glitId/kudos", authMiddleware, (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
+// Delete kudos to a Glit
 glitRouter.delete("/:glitId/kudos", authMiddleware, (req, res) => {
   Glit.updateOne(
     { _id: req.params.glitId },
@@ -101,6 +102,8 @@ glitRouter.delete("/:glitId/kudos", authMiddleware, (req, res) => {
 });
 
 
+// Used by Public and Private 'get Glits' both
+// Returns --> Glits sorted + total number of Glits in database + total number of followed Tweets [PAGINATOR]
 const feed = (req, res, followedAuthors) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 10;

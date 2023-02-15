@@ -1,10 +1,10 @@
 const express = require("express");
 const authMiddleware = require("../authMiddleware");
-// const { response } = require('../app'); // comenté esta linea porque no encuentra el modulo
 
 const User = require("../models/user");
 
 const userRouter = express.Router();
+
 
 // Follow new user
 userRouter.post("/:userId/follow", authMiddleware, (req, res) => {
@@ -22,7 +22,7 @@ userRouter.post("/:userId/follow", authMiddleware, (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-//To unfollow
+//Unfollow user
 userRouter.delete("/:userId/unfollow", authMiddleware, (req, res) => {
   User.updateOne(
     { _id: req.jwtInfo.user_id },
