@@ -116,7 +116,7 @@ const forgotPasswordSuccess = (req, res, user) => {
       Messages: [
         {
           From: {
-            Email: "mari_antoniol@hotmail.com",
+            Email: "newpassword@glit.com",
             Name: "Glitter",
           },
           To: [
