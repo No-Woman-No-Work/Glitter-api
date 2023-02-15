@@ -1,13 +1,13 @@
-# FLITTER
-Link: [Flitter design doc](https://github.com/No-Woman-No-Work/flitter/blob/main/README.md)
+# GLITTER
+Link: [Glitter design doc](https://github.com/No-Woman-No-Work/flitter/blob/main/README.md)
 
-Frontend: [Flitter frontend](https://github.com/No-Woman-No-Work/flitter)
+Frontend: [Glitter frontend](https://github.com/No-Woman-No-Work/flitter)
 
 Author(s): Andrea Ares Fernandez, Emma Alonso McCoy, Nelanyi Ruiz Contreras, Silvia Pescador López, Mariana Antoniol.
 
 Status: [Draft]
 
-Última actualización: 13/02/2023
+Last updated: 13/02/2023
 
 ## Contenido
 - Downloading
@@ -19,9 +19,9 @@ Status: [Draft]
 
 
 ## Downloading
-Flitter actualmente está alojado en GitHub. El frontend del proyecto se puede encontrar en [este enlace](https://github.com/No-Woman-No-Work/flitter), y el backend en [este enlace](https://github.com/No-Woman-No-Work/v1-Flitter-Back-)
+Glitter actualmente está alojado en GitHub. El frontend del proyecto se puede encontrar en [este enlace](https://github.com/No-Woman-No-Work/flitter), y el backend en [este enlace](https://github.com/No-Woman-No-Work/v1-Flitter-Back-)
 
-Si deseas seguir el desarrollo del backend de Flitter, puedes descargar el código fuente a través de Git clone.
+Si deseas seguir el desarrollo del backend de Glitter, puedes descargar el código fuente a través de Git clone.
 
 ```
 git clone + enlace del proyecto
@@ -67,9 +67,9 @@ node app.js
 ## Goals
 Proyecto final del Bootcamp Mujeres en Tech.
 
-El objetivo de este proyecto es poner en práctica todos los conocimientos adquiridos, simulando una situación real: desarrollo de un proyecto utilizando iteraciones, tomando decisiones de arquitectura y con una fecha límite de entrega, por ello hemos tomado la decisión de desarrollar Flitter.
+El objetivo de este proyecto es poner en práctica todos los conocimientos adquiridos, simulando una situación real: desarrollo de un proyecto utilizando iteraciones, tomando decisiones de arquitectura y con una fecha límite de entrega, por ello hemos tomado la decisión de desarrollar Glitter.
 
-_Flitter será una plataforma que permita la publicación de mini contenidos con los siguientes objetivos:_
+_Glitter será una plataforma que permita la publicación de mini contenidos con los siguientes objetivos:_
 
 - Proporcionar una interfaz sencilla y amigable que facilite la navegación e interacción con la aplicación.
 
@@ -94,13 +94,13 @@ usuario, dirección de e-mail y contraseña de acceso, y garantizar la seguridad
 Es un buen momento para crear una plataforma alternativa a Twitter debido a la situación que atraviesa dicha plataforma, y asimismo consideramos que se trata de un proyecto ideal para potenciar nuestros conocimientos tanto de backend, como de frontend, para cubrir las necesidades y aportar valor.
 
 ## Design and Architecture
-Flitter es una aplicación web desarrollada con un stack tecnológico de vanguardia. Se compone de un backend construido con Node.js, Express y MongoDB, y un frontend desarrollado con Javascript y el framework Vue 3.
+Glitter es una aplicación web desarrollada con un stack tecnológico de vanguardia. Se compone de un backend construido con Node.js, Express y MongoDB, y un frontend desarrollado con Javascript y el framework Vue 3.
 
-El frontend de Flitter está construido con Vue Composition API y estilado con Bootstrap. La conexión con el backend se realiza a través de Axios, y se ha utilizado Vuex como manejador de estados. Además, se han implementado adaptaciones (transpiladores) a motores más antiguos de Javascript, como Babel y Webpack, para asegurar la compatibilidad con todos los navegadores.
+El frontend de Glitter está construido con Vue Composition API y estilado con Bootstrap. La conexión con el backend se realiza a través de Axios, y se ha utilizado Vuex como manejador de estados. Además, se han implementado adaptaciones (transpiladores) a motores más antiguos de Javascript, como Babel y Webpack, para asegurar la compatibilidad con todos los navegadores.
 
-El backend de Flitter utiliza Mongoose para conectarse a la base de datos noSQL MongoDB, y cuenta con un sistema de autenticación basado en Json Web Token y un sistema de mailing implementado con MailJet. Además, se han utilizado herramientas de pruebas internas de desarrollo, como Postman, para garantizar la calidad y estabilidad de la aplicación.
+El backend de Glitter utiliza Mongoose para conectarse a la base de datos noSQL MongoDB, y cuenta con un sistema de autenticación basado en Json Web Token y un sistema de mailing implementado con MailJet. Además, se han utilizado herramientas de pruebas internas de desarrollo, como Postman, para garantizar la calidad y estabilidad de la aplicación.
 
-En resumen, Flitter es una aplicación web potente y versátil, construida con las tecnologías más modernas y adaptada para funcionar en todos los dispositivos con diseño responsive.
+En resumen, Glitter es una aplicación web potente y versátil, construida con las tecnologías más modernas y adaptada para funcionar en todos los dispositivos con diseño responsive.
 
 ![input](https://user-images.githubusercontent.com/50715363/218560841-5ae5c39a-f3d8-4b0e-aab0-e9fe8a2cf7b6.png)
 

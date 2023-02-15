@@ -9,7 +9,7 @@ const userRouter = express.Router();
 // Follow new user
 userRouter.post("/:userId/follow", authMiddleware, (req, res) => {
   if (req.jwtInfo.user_id === req.params.userId) {
-    return res.status(400).json({ error: "No puedes seguirte a ti mismo" });
+    return res.status(400).json({ error: "You can't follow yourself" });
   }
 
   User.updateOne(

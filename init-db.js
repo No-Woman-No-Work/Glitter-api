@@ -1,248 +1,204 @@
-// Inicializar la base datos con los datos mínimos para funcionar
+// Initialize the database with the minimum data required to function
 
-const readline = require('readline');
+const readline = require("readline");
 
-// cargamos los modelos
+// Loading models
 
-const Tweet = require('./models/tweet');
-const User = require('./models/user');
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
-const ObjectId = mongoose.Types.ObjectId
-
-
+const Glit = require("./models/glit");
+const User = require("./models/user");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const ObjectId = mongoose.Types.ObjectId;
 
 async function main() {
-
-  // preguntar al usuario si está seguro
-  const nextStep = await question('Do you want to delete the database? [y/n]')
+  // Ask the user to confirm if they are sure
+  const nextStep = await question("Do you want to delete the database? [y/n]");
   if (!nextStep) {
     process.exit();
   }
 
-  // conectar a la base de datos
+  // connect to the DB
 
-  const connection = require('./lib/connectMongoose')
-  
-  // inicializar la colección de usuarios y luego la de tweets
-  await initUsers()
-  await initTweets();
+  const connection = require("./lib/connectMongoose");
 
-  // desconectamos de la base de datos
+  // Initialize the user collection, then the glit collection
+  await initUsers();
+  await initGlits();
+
+  // Desconnect the DB
 
   connection.close();
 }
 
-main().catch(err => console.log('Error', err));
+main().catch((err) => console.log("Error", err));
 
-let users = []
+let users = [];
 
 async function initUsers() {
-  
   // delete all users in database
   const resultUsers = await User.deleteMany({});
-  console.log(`Deleted ${resultUsers.deletedCount} users.`)
-  
+  console.log(`Deleted ${resultUsers.deletedCount} users.`);
+
   // create 5 new users
-  const user1 = new User ({
+  const user1 = new User({
     _id: new ObjectId(),
-    username: 'sil',
-    email: 'hello_sil@gmail.com',
-    password: '123456',
-    following: []
+    username: "sil",
+    email: "hello_sil@gmail.com",
+    password: "123456",
+    following: [],
   });
   await user1.save();
 
-  const user2 = new User ({
+  const user2 = new User({
     _id: new ObjectId(),
-    username: 'mari',
-    email: 'hello_mari@gmail.com',
-    password: '123456',
-    following: [user1._id]
+    username: "mari",
+    email: "hello_mari@gmail.com",
+    password: "123456",
+    following: [user1._id],
   });
   await user2.save();
 
-  const user3 = new User ({
+  const user3 = new User({
     _id: new ObjectId(),
-    username: 'mollete',
-    email: 'hello_mollete@gmail.com',
-    password: '123456',
-    following: [user2._id, user1._id]
+    username: "mollete",
+    email: "hello_mollete@gmail.com",
+    password: "123456",
+    following: [user2._id, user1._id],
   });
   await user3.save();
 
-  const user4 = new User ({
+  const user4 = new User({
     _id: new ObjectId(),
-    username: 'muki',
-    email: 'hello_muki@hotmail.com',
-    password: '123456',
-    following: [user2._id, user1._id, user3._id]
+    username: "muki",
+    email: "hello_muki@hotmail.com",
+    password: "123456",
+    following: [user2._id, user1._id, user3._id],
   });
   await user4.save();
 
-  const user5 = new User ({
+  const user5 = new User({
     _id: new ObjectId(),
-    username: 'neli',
-    email: 'hello_neli@gmail.com',
-    password: '123456',
-    following: [user2._id, user1._id, user3._id]
-
+    username: "neli",
+    email: "hello_neli@gmail.com",
+    password: "123456",
+    following: [user2._id, user1._id, user3._id],
   });
   await user5.save();
-  
-  
+
   users = [user1, user2, user3, user4, user5];
 
-  console.log(`Created ${users.length} users.`)
+  console.log(`Created ${users.length} users.`);
 }
 
-async function initTweets() {
+async function initGlits() {
+  // delete all documents from the Glit collection
+  const resultGlits = await Glit.deleteMany();
+  console.log(`Deleted ${resultGlits.deletedCount} glits.`);
 
-  // borrar todos los documentos de la colección de Tweets
-  const resultTweets = await Tweet.deleteMany();
-  console.log(`Deleted ${resultTweets.deletedCount} tweets.`);
-
-  // crear Tweets iniciales
-  const inserted = await Tweet.insertMany([
+  // initial glits
+  const inserted = await Glit.insertMany([
     {
       text: "❤I love coding!",
       imagePath: "/uploads/ilovecoding.jpg",
       publishDate: Date.now(),
       author: users[0]._id,
-      kudos: [
-        users[2]._id,
-        users[3]._id,
-        users[4]._id
-      ]
+      kudos: [users[2]._id, users[3]._id, users[4]._id],
     },
     {
       text: "When MongoDb doesn´t feed you:",
       imagePath: "/uploads/please-sir.jpg",
       publishDate: Date.now(),
       author: users[1]._id,
-      kudos: [
-        users[1]._id,
-        users[3]._id
-      ]
+      kudos: [users[1]._id, users[3]._id],
     },
     {
       text: "I´m on a seafood diet. I see food and i eat it.🤣",
       imagePath: "",
       publishDate: Date.now(),
       author: users[2]._id,
-      kudos: [
-        users[1]._id,
-        users[2]._id
-      ]
+      kudos: [users[1]._id, users[2]._id],
     },
     {
       text: "New working day here!",
       imagePath: "/uploads/working.webp",
       publishDate: Date.now(),
       author: users[3]._id,
-      kudos: [
-        users[2]._id
-      ]
+      kudos: [users[2]._id],
     },
     {
       text: "Be proud of who you are 💕",
       imagePath: "/uploads/orgullo.webp",
       publishDate: Date.now(),
       author: users[4]._id,
-      kudos: [
-        users[1]._id,
-        users[3]._id
-      ]
+      kudos: [users[1]._id, users[3]._id],
     },
     {
-      text: "Look mum I have an image",
+      text: "Look mum I uploaded an image",
       imagePath: "/uploads/zebra.webp",
       publishDate: Date.now(),
       author: users[4]._id,
-      kudos: [
-        users[1]._id,
-        users[3]._id
-      ]
+      kudos: [users[1]._id, users[3]._id],
     },
     {
       text: "Ola ke ase",
       imagePath: "/uploads/olakease.jpg",
       publishDate: Date.now(),
       author: users[0]._id,
-      kudos: [
-        users[2]._id,
-        users[3]._id,
-        users[4]._id
-      ]
+      kudos: [users[2]._id, users[3]._id, users[4]._id],
     },
     {
       text: "Love yourself first, because that´s who you´ll be spending the rest of your life with.",
       imagePath: "/uploads/loveurself.jpeg",
       publishDate: Date.now(),
       author: users[1]._id,
-      kudos: [
-        users[1]._id,
-        users[3]._id
-      ]
+      kudos: [users[1]._id, users[3]._id],
     },
     {
       text: "💻 Codes all day long in javascript... Code doesn´t run:",
       imagePath: "/uploads/foreveralone.jpg",
       publishDate: Date.now(),
       author: users[2]._id,
-      kudos: [
-        users[1]._id,
-        users[2]._id
-      ]
+      kudos: [users[1]._id, users[2]._id],
     },
     {
       text: "Whoooops... Sorry! I forgot doing git pull 🧨",
       imagePath: "/uploads/firegirl.jpg",
       publishDate: Date.now(),
       author: users[3]._id,
-      kudos: [
-        users[2]._id
-      ]
+      kudos: [users[2]._id],
     },
     {
-      text: "I´m so proud of working together my friend!",
+      text: "I´m so happy to being working with my friends!",
       imagePath: "/uploads/codingGirls.jfif",
       publishDate: Date.now(),
       author: users[4]._id,
-      kudos: [
-        users[1]._id,
-        users[3]._id
-      ]
+      kudos: [users[1]._id, users[3]._id],
     },
     {
-      text: "i´m not just 'special', i´m a LIMITED EDITION.",
+      text: "i´m not just 'special', i´m LIMITED EDITION.",
       imagePath: "/uploads/bravekid.jpg",
       publishDate: Date.now(),
       author: users[4]._id,
-      kudos: [
-        users[1]._id,
-        users[3]._id
-      ]
-    }
+      kudos: [users[1]._id, users[3]._id],
+    },
   ]);
-  console.log(`Created ${inserted.length} tweets.`);
+  console.log(`Created ${inserted.length} glits.`);
 }
 
-// función pregunta si/no a borrar la base de datos anterior
-
+// function for the y/n question
 function question(text) {
   return new Promise((resolve, reject) => {
     const interface = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    interface.question(text, answer => {
+    interface.question(text, (answer) => {
       interface.close();
-      if (answer.toLowerCase() === 'y') {
+      if (answer.toLowerCase() === "y") {
         resolve(true);
         return;
       }
       resolve(false);
-    })
-  })
+    });
+  });
 }
