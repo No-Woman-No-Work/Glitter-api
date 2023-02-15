@@ -1,7 +1,7 @@
-# GLITTER
-Link: [Glitter design doc](https://github.com/No-Woman-No-Work/flitter/blob/main/README.md)
+# GLITTER FRONTEND
+Link: [Glitter design doc](https://github.com/No-Woman-No-Work/Glitter-Vue#readme)
 
-Frontend: [Glitter frontend](https://github.com/No-Woman-No-Work/flitter)
+Frontend: [Glitter frontend](https://github.com/No-Woman-No-Work/Glitter-Vue)
 
 Author(s): Andrea Ares Fernandez, Emma Alonso McCoy, Nelanyi Ruiz Contreras, Silvia Pescador López, Mariana Antoniol.
 
@@ -16,7 +16,7 @@ Last updated: 13/02/2023
 - Background
 - Design and Architecture
 - Considerations
-# GLITTER
+# GLITTER BACKEND
 Link: [Glitter design doc](https://github.com/No-Woman-No-Work/Glitter-api/blob/main/README.md)
 
 Backend: [Glitter backend](https://github.com/No-Woman-No-Work/Glitter-api/blob/main/README.md)
@@ -93,6 +93,7 @@ Reset a user's password once the recoverPasswordToken has been confirmed.
 
 ### Create new glit
 **POST /**
+http://localhost:3000/
 
 ### Delete glit
 **DELETE /:glitId**
