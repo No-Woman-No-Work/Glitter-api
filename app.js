@@ -1,10 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const authMiddleware = require("./authMiddleware");
 
-// ...
-
-// const mongoose = require('mongoose');
 
 require("./lib/connectMongoose");
 

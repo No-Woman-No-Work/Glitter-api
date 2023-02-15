@@ -1,7 +1,7 @@
 {
-  "name": "flitter",
+  "name": "Glitter",
   "version": "1.0.0",
-  "description": "Flitter API",
+  "description": "Glitter API",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/No-Woman-No-Work/v1-Flitter-Back-"
+    "url": "git+https://github.com/No-Woman-No-Work/v1-Glitter-Back-"
   },
   "author": "No-Woman-no-Api",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mariant2/nodeapi/issues"
   },
-  "homepage": "https://github.com/No-Woman-No-Work/v1-Flitter-Back-/blob/main/README.md",
+  "homepage": "https://github.com/No-Woman-No-Work/v1-Glitter-Back-/blob/main/README.md",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
